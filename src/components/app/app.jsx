@@ -2,6 +2,7 @@ import styles from "./app.module.css";
 
 import AppHeader from "../header/header";
 import BurgerIngredients from "../burger-ingridients/burger-ingredients";
+import BurgerConstructor from "../burger-constructor/burger-constructor";
 
 function App() {
     return (
@@ -9,6 +10,7 @@ function App() {
             <AppHeader/>
             <main className={styles.main}>
                 <BurgerIngredients/>
+                <BurgerConstructor/>
             </main>
         </div>
     );
