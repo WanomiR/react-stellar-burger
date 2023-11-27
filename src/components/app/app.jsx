@@ -1,4 +1,5 @@
 import styles from "./app.module.css";
+import {data} from "../../utils/data"
 
 import AppHeader from "../header/header";
 import BurgerIngredients from "../burger-ingridients/burger-ingredients";
@@ -9,8 +10,8 @@ function App() {
         <div className={styles.app}>
             <AppHeader/>
             <main className={styles.main}>
-                <BurgerIngredients/>
-                <BurgerConstructor/>
+                <BurgerIngredients data={data}/>
+                <BurgerConstructor data={data}/>
             </main>
         </div>
     );

@@ -1,7 +1,8 @@
 import styles from "./burger-ingredients.module.css"
-import {data} from "../../utils/data";
 import {Tab, CurrencyIcon, Counter} from "@ya.praktikum/react-developer-burger-ui-components"
 import React, { useState } from "react";
+import {ingredientPropType} from "../../utils/prop-types"
+import PropTypes from "prop-types";
 
 const Tabs = () => {
     const [current, setCurrent] = useState('Булки')
@@ -41,7 +42,7 @@ const Cards = ({ children }) => {
     )
 }
 
-export default function BurgerIngredients() {
+export default function BurgerIngredients({data}) {
     return (
         <section className={styles.section}>
             <h1 className={"text text_type_main-large mt-10 mb-5"}>Соберите бургер</h1>
@@ -75,4 +76,8 @@ export default function BurgerIngredients() {
             </div>
         </section>
     )
+}
+
+BurgerIngredients.propTypes = {
+    data: PropTypes.arrayOf(ingredientPropType),
 }

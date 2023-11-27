@@ -1,10 +1,13 @@
 import styles from "./burger-constructor.module.css"
-import {data} from "../../utils/data"
 import {Button, ConstructorElement, CurrencyIcon, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components"
+import {ingredientPropType} from "../../utils/prop-types";
+import PropTypes from "prop-types";
 
-const bun = data.filter(item => item.type === "bun")[0]
 
-const BurgerComponents = () => {
+const BurgerComponents = ({data}) => {
+    // temporary element
+    const bun = data.filter(item => item.type === "bun")[0]
+
     return (
         <ul className={`${styles.componentsList}`}>
             <li className={"ml-4 pl-8"}><ConstructorElement
@@ -36,10 +39,10 @@ const BurgerComponents = () => {
     )
 }
 
-export default function BurgerConstructor() {
+export default function BurgerConstructor({data}) {
     return (
         <section className={`${styles.section} ml-10 mt-25`}>
-            <BurgerComponents />
+            <BurgerComponents data={data}/>
             <div className={`${styles.order} mt-10 mr-4`}>
                 <div className={`${styles.total} mr-10`}>
                     <p className={"text text_type_digits-medium mr-2"}>610</p>
@@ -49,4 +52,8 @@ export default function BurgerConstructor() {
             </div>
         </section>
     )
+}
+
+BurgerConstructor.propTypes = {
+    data: PropTypes.arrayOf(ingredientPropType),
 }
