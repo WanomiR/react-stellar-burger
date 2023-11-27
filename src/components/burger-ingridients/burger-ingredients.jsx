@@ -1,7 +1,7 @@
 import styles from "./burger-ingredients.module.css"
 import {data} from "../../utils/data";
 import {Tab, CurrencyIcon, Counter} from "@ya.praktikum/react-developer-burger-ui-components"
-import { useState } from "react";
+import React, { useState } from "react";
 
 const Tabs = () => {
     const [current, setCurrent] = useState('Булки')
@@ -23,7 +23,7 @@ const Tabs = () => {
 const Card = ({data}) => {
     return (
         <li>
-            <article className={`${styles.card}`} key={data._id}>
+            <article className={`${styles.card}`}>
                 <img src={data.image} alt={`Изображение: ${data.name}`} className={`${styles.image} ml-4 mr-4`}/>
                 <div className={`${styles.price} mt-2 mb-2`}>
                     <p className={"text text_type_digits-default mr-3"}>{data.price}</p><CurrencyIcon type={"primary"}/>
@@ -50,17 +50,27 @@ export default function BurgerIngredients() {
                 <h2 className={"text text_type_main-medium mt-10"}>Булки</h2>
                 <Cards>
                     {data.filter(item => item.type === "bun")
-                        .map(itemData => <Card data={itemData} g/>)}
+                        .map(itemData => (
+                                <React.Fragment key={itemData._id}>
+                                    <Card data={itemData} />
+                                </React.Fragment>))}
                 </Cards>
                 <h2 className={"text text_type_main-medium"}>Соусы</h2>
                 <Cards>
                     {data.filter(item => item.type === "sauce")
-                        .map(itemData => <Card data={itemData} g/>)}
+                        .map(itemData => (
+                                <React.Fragment key={itemData._id}>
+                                    <Card data={itemData} />
+                                </React.Fragment>))}
                 </Cards>
                 <h2 className={"text text_type_main-medium"}>Начинки</h2>
                 <Cards>
                     {data.filter(item => item.type === "main")
-                        .map(itemData => <Card data={itemData} g/>)}
+                        .map(itemData => (
+                                <React.Fragment key={itemData._id}>
+                                    <Card data={itemData} />
+                                </React.Fragment>
+                            ))}
                 </Cards>
             </div>
         </section>
