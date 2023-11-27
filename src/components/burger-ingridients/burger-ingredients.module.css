@@ -1,0 +1,49 @@
+.section {
+    width: 600px;
+}
+
+.tabs {
+    display: flex;
+}
+
+.ingredientsContainer {
+    max-height: calc(100vh - 245px);
+    overflow-y: scroll;
+}
+
+.cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 32px 24px;
+    list-style: none;
+}
+
+.card {
+    width: 272px;
+    height: 208px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.image {
+    display: block;
+    width: 240px;
+}
+
+.price {
+    display: flex;
+    align-items: center;
+}
+
+.name {
+    text-align: center;
+}
+
+.counter {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
