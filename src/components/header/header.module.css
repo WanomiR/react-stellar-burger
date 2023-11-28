@@ -23,13 +23,6 @@
     position: relative;
 }
 
-.link {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    color: inherit;
-}
-
 .logo {
     position: absolute;
     margin: 0 auto;
