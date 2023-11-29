@@ -5,10 +5,11 @@ import reportWebVitals from "./reportWebVitals";
 import { createRoot } from 'react-dom/client'
 
 const root = createRoot(document.getElementById("root"))
+const ingredientsDataUrl = "https://norma.nomoreparties.space/api/ingredients";
 
 root.render(
   <React.StrictMode>
-    <App />
+    <App dataUrl={ingredientsDataUrl}/>
   </React.StrictMode>,
 );
 
