@@ -5,7 +5,6 @@ import {data} from "../../utils/data"
 import AppHeader from "../header/header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
-import {setupApiStore} from "@reduxjs/toolkit/src/query/tests/helpers";
 
 function App({dataUrl}) {
     const [state, setSate] = useState({
@@ -40,7 +39,7 @@ function App({dataUrl}) {
             {
                 !isLoading &&
                 !hasError &&
-                data.length > 0 &&
+                data.length &&
                 <main className={styles.main}>
                     <BurgerIngredients data={data}/>
                     <BurgerConstructor data={data}/>
