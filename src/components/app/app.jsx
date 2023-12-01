@@ -16,7 +16,7 @@ function App({dataUrl}) {
         data: []
     });
 
-    const [modalState, setModalState] = useState({isOpen: true})
+    const [modalState, setModalState] = useState({})
     const modalRef = useRef()
 
     useEffect(() => {
@@ -40,12 +40,16 @@ function App({dataUrl}) {
     const handleModalClose = (e) => {
         const canClose = (e.currentTarget.name === "closeButton") || (modalRef.current === e.target) || (e.key === "Escape")
         if (canClose) {
-            setModalState({isOpen: false});
+            setModalState({...modalState, isOpen: false});
         }
     }
 
+    const openOrderDetails = () => {
+        setModalState({...modalState, isOpen: true, type: "order details"})
+    }
+
     const { isLoading, hasError, data } = dataState;
-    const { isOpen } = modalState;
+    const { isOpen, type } = modalState;
 
     return (
         <div className={styles.app}>
@@ -58,11 +62,11 @@ function App({dataUrl}) {
                 data.length &&
                 <main className={styles.main}>
                     <BurgerIngredients data={data}/>
-                    <BurgerConstructor data={data}/>
+                    <BurgerConstructor data={data} openModal={openOrderDetails}/>
                 </main>
             }
             {
-                isOpen &&
+                isOpen && type === "order details" &&
                 <ModalOverlay handleClose={handleModalClose} ref={modalRef}>
                     <OrderDetails/>
                 </ModalOverlay>

@@ -6,7 +6,7 @@ import {ingredientPropType} from "../../utils/prop-types";
 import {Button, ConstructorElement, CurrencyIcon, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components"
 
 
-export default function BurgerConstructor({data}) {
+export default function BurgerConstructor({data, openModal}) {
 
     const {bun, ingredients} = useMemo(() => ({
             bun: data.find(item => item.type === "bun"),
@@ -47,7 +47,7 @@ export default function BurgerConstructor({data}) {
                     <p className={"text text_type_digits-medium mr-2"}>610</p>
                     <CurrencyIcon type={"primary"}/>
                 </div>
-                <Button htmlType={"button"} type={"primary"} size={"large"}>Оформить заказ</Button>
+                <Button htmlType={"button"} type={"primary"} size={"large"} onClick={openModal}>Оформить заказ</Button>
             </div>
         </section>
     )
