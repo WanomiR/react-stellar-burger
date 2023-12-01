@@ -1,5 +1,5 @@
 import styles from "./modal-overlay.module.css"
-import {useEffect, useRef} from "react";
+import {forwardRef, useEffect} from "react";
 import {createPortal} from "react-dom";
 
 const rootNode = document.getElementById("root")
@@ -7,33 +7,28 @@ rootNode.insertAdjacentHTML("afterend", "<div id='root-modal'></div>")
 
 const modalRoot = document.getElementById("root-modal");
 
-export default function ModalOverlay({children, handleClose}) {
-
-    const overlayRef = useRef();
-
-    const closeOnEsc = (e) => {
-        if (e.key === "Escape") {
-            handleClose();
-        }
-    }
+const ModalOverlay = forwardRef(({children, handleClose}, ref) => {
 
     useEffect(() => {
-        const overlayElement = overlayRef.current;
+        const overlayElement = ref.current;
 
         overlayElement.addEventListener("click", handleClose)
-        document.addEventListener("keydown", closeOnEsc)
+        document.addEventListener("keydown", handleClose)
 
         return () => {
             overlayElement.removeEventListener("click", handleClose);
-            document.removeEventListener("keydown", closeOnEsc);
+            document.removeEventListener("keydown", handleClose);
         }
-    }, [overlayRef]);
+    }, []);
 
     return createPortal((
         <>
-            <div className={styles.overlay} ref={overlayRef}>
+            <div className={styles.overlay} ref={ref}>
                 {children}
             </div>
         </>
     ), modalRoot);
-}
+})
+
+export default ModalOverlay;
+

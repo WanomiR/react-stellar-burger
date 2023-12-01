@@ -1,10 +1,11 @@
-import {useState, useEffect} from "react";
+import {useState, useEffect, forwardRef, useRef} from "react";
 import styles from "./app.module.css";
 
 import AppHeader from "../header/header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import ModalOverlay from "../modal-overlay/modal-overlay";
+import Modal from "../modal/modal";
 
 
 function App({dataUrl}) {
@@ -13,8 +14,8 @@ function App({dataUrl}) {
         hasError: false,
         data: []
     });
-
     const [modalState, setModalState] = useState({isOpen: true})
+    const modalRef = useRef()
 
     useEffect(() => {
         getIngredientsData();
@@ -34,7 +35,10 @@ function App({dataUrl}) {
     }
 
     const handleModalClose = (e) => {
-        setModalState({isOpen: false});
+        const canClose = (e.currentTarget.name === "closeButton") || (modalRef.current === e.target) || (e.key === "Escape")
+        if (canClose) {
+            setModalState({isOpen: false});
+        }
     }
 
     const { isLoading, hasError, data } = dataState;
@@ -56,8 +60,10 @@ function App({dataUrl}) {
             }
             {
                 isOpen &&
-                <ModalOverlay handleClose={handleModalClose}>
-                    <p>Some text here</p>
+                <ModalOverlay handleClose={handleModalClose} ref={modalRef}>
+                    <Modal handleClose={handleModalClose}>
+                        <p>Some text</p>
+                    </Modal>
                 </ModalOverlay>
             }
         </div>
