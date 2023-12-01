@@ -1,8 +1,7 @@
 import React, {useMemo} from "react";
-import PropTypes from "prop-types";
 
 import styles from "./burger-ingredients.module.css"
-import {ingredientPropType} from "../../utils/prop-types"
+import {burgerIngredientsPropTypes} from "../../utils/prop-types"
 import Tabs from "../tabs/tabs"
 import IngredientsCategory from "../ingredients-category/ingredients-category";
 
@@ -25,6 +24,4 @@ export default function BurgerIngredients({data, openDetails}) {
     )
 }
 
-BurgerIngredients.propTypes = {
-    data: PropTypes.arrayOf(ingredientPropType.isRequired).isRequired,
-}
+BurgerIngredients.propTypes = burgerIngredientsPropTypes;

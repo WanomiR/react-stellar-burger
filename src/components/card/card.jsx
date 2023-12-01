@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./card.module.css";
 import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import {ingredientPropType} from "../../utils/prop-types"
+import {cardPropTypes} from "../../utils/prop-types"
 
 export default function Card({data, openDetails}) {
 
@@ -24,6 +24,4 @@ export default function Card({data, openDetails}) {
     )
 }
 
-Card.propTypes = {
-    data: ingredientPropType.isRequired
-}
+Card.propTypes = cardPropTypes;

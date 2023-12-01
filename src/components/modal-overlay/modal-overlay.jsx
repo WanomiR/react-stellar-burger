@@ -2,6 +2,7 @@ import styles from "./modal-overlay.module.css"
 import {forwardRef, useEffect} from "react";
 import {createPortal} from "react-dom";
 import {CloseIcon} from "@ya.praktikum/react-developer-burger-ui-components";
+import {modalOverlayPropTypes} from "../../utils/prop-types";
 
 const rootNode = document.getElementById("root")
 rootNode.insertAdjacentHTML("afterend", "<div id='root-modal'></div>")
@@ -20,6 +21,7 @@ const ModalOverlay = forwardRef(({children, handleClose}, ref) => {
             overlayElement.removeEventListener("click", handleClose);
             document.removeEventListener("keydown", handleClose);
         }
+        // eslint-disable-next-line
     }, []);
 
     return createPortal((
@@ -36,3 +38,4 @@ const ModalOverlay = forwardRef(({children, handleClose}, ref) => {
 
 export default ModalOverlay;
 
+ModalOverlay.propTypes = modalOverlayPropTypes;

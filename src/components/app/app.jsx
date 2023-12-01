@@ -1,4 +1,4 @@
-import {useState, useEffect, forwardRef, useRef} from "react";
+import {useState, useEffect, useRef} from "react";
 import styles from "./app.module.css";
 
 import AppHeader from "../header/header";
@@ -7,6 +7,7 @@ import BurgerConstructor from "../burger-constructor/burger-constructor";
 import ModalOverlay from "../modal-overlay/modal-overlay";
 import OrderDetails from "../order-details/odrder-details";
 import IngredientDetails from "../ingredient-details/ingredient-details";
+import {appPropTypes} from "../../utils/prop-types";
 
 
 
@@ -51,8 +52,8 @@ function App({dataUrl}) {
         setModalState({...modalState, isOpen: true, type: "order details"})
     }
 
-    const openIngredientDetails = (data) => {
-        setIngredientDetails({...data});
+    const openIngredientDetails = (ingredientData) => {
+        setIngredientDetails({...ingredientData});
         setModalState({...modalState, isOpen: true, type: "ingredient details"})
     }
 
@@ -90,3 +91,5 @@ function App({dataUrl}) {
 }
 
 export default App;
+
+App.propTypes = appPropTypes;

@@ -1,4 +1,5 @@
 import styles from "./ingredient-details.module.css"
+import {ingredientDetailsPropTypes} from "../../utils/prop-types";
 
 export default function IngredientDetails({image_large, name, calories, proteins, fat, carbohydrates}) {
     return (
@@ -29,3 +30,5 @@ export default function IngredientDetails({image_large, name, calories, proteins
         </>
     )
 }
+
+IngredientDetails.propTypes = ingredientDetailsPropTypes;
