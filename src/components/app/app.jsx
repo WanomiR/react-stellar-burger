@@ -5,7 +5,6 @@ import AppHeader from "../header/header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import ModalOverlay from "../modal-overlay/modal-overlay";
-import Modal from "../modal/modal";
 import OrderDetails from "../order-details/odrder-details";
 
 
@@ -65,9 +64,7 @@ function App({dataUrl}) {
             {
                 isOpen &&
                 <ModalOverlay handleClose={handleModalClose} ref={modalRef}>
-                    <Modal handleClose={handleModalClose}>
-                        <OrderDetails/>
-                    </Modal>
+                    <OrderDetails/>
                 </ModalOverlay>
             }
         </div>

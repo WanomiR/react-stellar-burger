@@ -1,6 +1,7 @@
 import styles from "./modal-overlay.module.css"
 import {forwardRef, useEffect} from "react";
 import {createPortal} from "react-dom";
+import {CloseIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 
 const rootNode = document.getElementById("root")
 rootNode.insertAdjacentHTML("afterend", "<div id='root-modal'></div>")
@@ -22,11 +23,14 @@ const ModalOverlay = forwardRef(({children, handleClose}, ref) => {
     }, []);
 
     return createPortal((
-        <>
-            <div className={styles.overlay} ref={ref}>
+        <div className={styles.overlay} ref={ref}>
+            <div className={styles.modal}>
                 {children}
+                <button className={styles.closeButton} onClick={handleClose} type={"button"} name={"closeButton"}>
+                    <CloseIcon type={"primary"}></CloseIcon>
+                </button>
             </div>
-        </>
+        </div>
     ), modalRoot);
 })
 
