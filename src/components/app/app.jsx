@@ -14,6 +14,7 @@ function App({dataUrl}) {
         hasError: false,
         data: []
     });
+
     const [modalState, setModalState] = useState({isOpen: true})
     const modalRef = useRef()
 
@@ -21,6 +22,7 @@ function App({dataUrl}) {
         getIngredientsData();
         // eslint-disable-next-line
     }, []);
+
 
     const getIngredientsData = async () => {
         setDataState({...dataState, isLoading: true, hasError: false});
