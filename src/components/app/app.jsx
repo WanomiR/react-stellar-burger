@@ -1,35 +1,44 @@
-import {useState, useEffect, lazy} from "react";
+import {useState, useEffect} from "react";
 import styles from "./app.module.css";
-import {data} from "../../utils/data"
 
 import AppHeader from "../header/header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
+import ModalOverlay from "../modal-overlay/modal-overlay";
+
 
 function App({dataUrl}) {
-    const [state, setSate] = useState({
+    const [dataState, setDataState] = useState({
         isLoading: false,
         hasError: false,
         data: []
     });
 
+    const [modalState, setModalState] = useState({isOpen: true})
+
     useEffect(() => {
         getIngredientsData();
+        // eslint-disable-next-line
     }, []);
 
     const getIngredientsData = async () => {
-        setSate({...state, isLoading: true, hasError: false});
+        setDataState({...dataState, isLoading: true, hasError: false});
         try {
             const res = await fetch(dataUrl);
             const result = await res.json();
-            setSate({...state, isLoading: false, hasError: false, data: result.data});
+            setDataState({...dataState, isLoading: false, hasError: false, data: result.data});
         } catch (error) {
-            setSate({...state, isLoading: false, hasError: true});
+            setDataState({...dataState, isLoading: false, hasError: true});
             console.log(error);
         }
     }
 
-    const { isLoading, hasError,data } = state;
+    const handleModalClose = (e) => {
+        setModalState({isOpen: false});
+    }
+
+    const { isLoading, hasError, data } = dataState;
+    const { isOpen } = modalState;
 
     return (
         <div className={styles.app}>
@@ -44,6 +53,12 @@ function App({dataUrl}) {
                     <BurgerIngredients data={data}/>
                     <BurgerConstructor data={data}/>
                 </main>
+            }
+            {
+                isOpen &&
+                <ModalOverlay handleClose={handleModalClose}>
+                    <p>Some text here</p>
+                </ModalOverlay>
             }
         </div>
     );
