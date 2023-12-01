@@ -6,6 +6,7 @@ import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import ModalOverlay from "../modal-overlay/modal-overlay";
 import OrderDetails from "../order-details/odrder-details";
+import IngredientDetails from "../ingredient-details/ingredient-details";
 
 
 
@@ -18,6 +19,8 @@ function App({dataUrl}) {
 
     const [modalState, setModalState] = useState({})
     const modalRef = useRef()
+
+    const [ingredientDetails, setIngredientDetails] = useState()
 
     useEffect(() => {
         getIngredientsData();
@@ -48,6 +51,11 @@ function App({dataUrl}) {
         setModalState({...modalState, isOpen: true, type: "order details"})
     }
 
+    const openIngredientDetails = (data) => {
+        setIngredientDetails({...data});
+        setModalState({...modalState, isOpen: true, type: "ingredient details"})
+    }
+
     const { isLoading, hasError, data } = dataState;
     const { isOpen, type } = modalState;
 
@@ -61,7 +69,7 @@ function App({dataUrl}) {
                 !hasError &&
                 data.length &&
                 <main className={styles.main}>
-                    <BurgerIngredients data={data}/>
+                    <BurgerIngredients data={data} openDetails={openIngredientDetails}/>
                     <BurgerConstructor data={data} openModal={openOrderDetails}/>
                 </main>
             }
@@ -69,6 +77,12 @@ function App({dataUrl}) {
                 isOpen && type === "order details" &&
                 <ModalOverlay handleClose={handleModalClose} ref={modalRef}>
                     <OrderDetails/>
+                </ModalOverlay>
+            }
+            {
+                isOpen && type === "ingredient details" &&
+                <ModalOverlay handleClose={handleModalClose} ref={modalRef}>
+                    <IngredientDetails {...ingredientDetails}/>
                 </ModalOverlay>
             }
         </div>

@@ -24,7 +24,7 @@ const ModalOverlay = forwardRef(({children, handleClose}, ref) => {
 
     return createPortal((
         <div className={styles.overlay} ref={ref}>
-            <div className={styles.modal}>
+            <div className={`${styles.modal} pl-10 pr-10`}>
                 {children}
                 <button className={styles.closeButton} onClick={handleClose} type={"button"} name={"closeButton"}>
                     <CloseIcon type={"primary"}></CloseIcon>

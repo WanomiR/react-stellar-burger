@@ -18,7 +18,7 @@ export default function BurgerConstructor({data, openModal}) {
             <ul className={`${styles.componentsList}`}>
                 <li className={"ml-4 pl-8"}><ConstructorElement
                     text={`${bun.name} (верх)`}
-                    thumbnail={bun.image}
+                    thumbnail={bun.image_mobile}
                     price={bun.price}
                     isLocked={true}
                     type={"top"}
@@ -29,14 +29,14 @@ export default function BurgerConstructor({data, openModal}) {
                             <DragIcon type={"primary"}/>
                             <ConstructorElement
                                 text={`${itemData.name} (низ)`}
-                                thumbnail={itemData.image}
+                                thumbnail={itemData.image_mobile}
                                 price={itemData.price}
                             /></li>
                     ))}
                 </div>
                 <li className={"pl-8 ml-4"}><ConstructorElement
                     text={`${bun.name} (низ)`}
-                    thumbnail={bun.image}
+                    thumbnail={bun.image_mobile}
                     price={bun.price}
                     isLocked={true}
                     type={"bottom"}
