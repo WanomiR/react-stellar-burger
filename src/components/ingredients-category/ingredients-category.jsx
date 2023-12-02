@@ -1,7 +1,8 @@
 import React from "react";
 import styles from "./ingredients-category.module.css"
-import {ingredientsCategoryPropTypes} from "../../utils/prop-types"
+import {ingredientPropType} from "../../utils/prop-types"
 import Card from "../card/card";
+import PropTypes from "prop-types";
 
 export default function IngredientsCategory({ingredients, categoryName, className, openDetails}) {
     return (
@@ -14,4 +15,9 @@ export default function IngredientsCategory({ingredients, categoryName, classNam
     )
 }
 
-IngredientsCategory.propTypes = ingredientsCategoryPropTypes;
+IngredientsCategory.propTypes = {
+    ingredients: PropTypes.arrayOf(ingredientPropType.isRequired).isRequired,
+    categoryName: PropTypes.string.isRequired,
+    className: PropTypes.string,
+    openDetails: PropTypes.func.isRequired
+};

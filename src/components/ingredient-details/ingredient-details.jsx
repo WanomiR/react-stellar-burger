@@ -1,12 +1,10 @@
 import styles from "./ingredient-details.module.css"
-import {ingredientDetailsPropTypes} from "../../utils/prop-types";
+import {ingredientPropType} from "../../utils/prop-types";
 
-export default function IngredientDetails({image_large, name, calories, proteins, fat, carbohydrates}) {
+export default function IngredientDetails({ingredientData}) {
+    const {image_large, name, calories, proteins, fat, carbohydrates} = ingredientData;
     return (
         <>
-            <h2 className={`${styles.title} text text_type_main-large mt-10 pt-3 mb-3`}>
-                Детали ингредиента
-            </h2>
             <img src={image_large} alt={`Изображение ингридента: ${name}`} className={`${styles.image} mb-4`}/>
             <h3 className={"text text_type_main-medium mb-8"}>{name}</h3>
             <table className={"mb-15"}>
@@ -31,4 +29,6 @@ export default function IngredientDetails({image_large, name, calories, proteins
     )
 }
 
-IngredientDetails.propTypes = ingredientDetailsPropTypes;
+IngredientDetails.propTypes = {
+    ingredientData: ingredientPropType,
+}

@@ -1,6 +1,7 @@
 import {useState} from "react";
 import styles from "./navigation-item.module.css";
 import {navigationItemPropTypes} from "../../utils/prop-types";
+import PropTypes from "prop-types";
 
 export default function NavigationItem({ Icon, itemName, className}) {
     const [isActive, setIsActive] = useState(false)
@@ -20,4 +21,8 @@ export default function NavigationItem({ Icon, itemName, className}) {
     )
 }
 
-NavigationItem.propTypes = navigationItemPropTypes;
+NavigationItem.propTypes = {
+    Icon: PropTypes.elementType.isRequired,
+    itemName: PropTypes.string.isRequired,
+    className: PropTypes.string
+};

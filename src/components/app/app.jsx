@@ -1,27 +1,31 @@
-import {useState, useEffect, useRef} from "react";
+import {useState, useEffect} from "react";
 import styles from "./app.module.css";
 
 import AppHeader from "../header/header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
-import ModalOverlay from "../modal-overlay/modal-overlay";
 import OrderDetails from "../order-details/odrder-details";
 import IngredientDetails from "../ingredient-details/ingredient-details";
-import {appPropTypes} from "../../utils/prop-types";
+import {getIngredients} from "../../utils/burger-api";
+import Modal from "../modal/modal";
 
 
-
-function App({dataUrl}) {
+function App() {
     const [dataState, setDataState] = useState({
         isLoading: false,
         hasError: false,
         data: []
     });
 
-    const [modalState, setModalState] = useState({})
-    const modalRef = useRef()
 
-    const [ingredientDetails, setIngredientDetails] = useState()
+    const [
+        orderDetailsModalState,
+        setOrderDetailsModalState
+    ] = useState({isOpen: false});
+    const [
+        ingredientDetailsModalState,
+        setIngredientDetailsModalState
+    ] = useState({isOpen: false, data: {}});
 
     useEffect(() => {
         getIngredientsData();
@@ -32,33 +36,31 @@ function App({dataUrl}) {
     const getIngredientsData = async () => {
         setDataState({...dataState, isLoading: true, hasError: false});
         try {
-            const res = await fetch(dataUrl);
-            const result = await res.json();
-            setDataState({...dataState, isLoading: false, hasError: false, data: result.data});
+            const ingredients = await getIngredients();
+            setDataState({...dataState, isLoading: false, hasError: false, data: ingredients.data});
         } catch (error) {
             setDataState({...dataState, isLoading: false, hasError: true});
             console.log(error);
         }
     }
 
-    const handleModalClose = (e) => {
-        const canClose = (e.currentTarget.name === "closeButton") || (modalRef.current === e.target) || (e.key === "Escape")
-        if (canClose) {
-            setModalState({...modalState, isOpen: false});
-        }
+    const closeOrderDetails = () => {
+        setOrderDetailsModalState({isOpen: false});
+    }
+
+    const closeIngredientDetails = () => {
+        setIngredientDetailsModalState({isOpen: false, data: {}});
     }
 
     const openOrderDetails = () => {
-        setModalState({...modalState, isOpen: true, type: "order details"})
+        setOrderDetailsModalState({isOpen: true})
     }
 
     const openIngredientDetails = (ingredientData) => {
-        setIngredientDetails({...ingredientData});
-        setModalState({...modalState, isOpen: true, type: "ingredient details"})
+        setIngredientDetailsModalState({isOpen: true, data: {...ingredientData}});
     }
 
-    const { isLoading, hasError, data } = dataState;
-    const { isOpen, type } = modalState;
+    const {isLoading, hasError, data} = dataState;
 
     return (
         <div className={styles.app}>
@@ -70,26 +72,26 @@ function App({dataUrl}) {
                 !hasError &&
                 data.length &&
                 <main className={styles.main}>
-                    <BurgerIngredients data={data} openDetails={openIngredientDetails}/>
-                    <BurgerConstructor data={data} openModal={openOrderDetails}/>
+                    <BurgerIngredients data={data} openModal={openIngredientDetails}>
+                        {
+                            ingredientDetailsModalState.isOpen &&
+                            <Modal handleModalClose={closeIngredientDetails} title={"Детали ингрединета"}>
+                                <IngredientDetails ingredientData={ingredientDetailsModalState.data}/>
+                            </Modal>
+                        }
+                    </BurgerIngredients>
+                    <BurgerConstructor data={data} openModal={openOrderDetails}>
+                        {
+                            orderDetailsModalState.isOpen &&
+                            <Modal handleModalClose={closeOrderDetails}>
+                                <OrderDetails/>
+                            </Modal>
+                        }
+                    </BurgerConstructor>
                 </main>
-            }
-            {
-                isOpen && type === "order details" &&
-                <ModalOverlay handleClose={handleModalClose} ref={modalRef}>
-                    <OrderDetails/>
-                </ModalOverlay>
-            }
-            {
-                isOpen && type === "ingredient details" &&
-                <ModalOverlay handleClose={handleModalClose} ref={modalRef}>
-                    <IngredientDetails {...ingredientDetails}/>
-                </ModalOverlay>
             }
         </div>
     );
 }
 
 export default App;
-
-App.propTypes = appPropTypes;
