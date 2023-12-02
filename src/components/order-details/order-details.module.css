@@ -1,0 +1,5 @@
+.orderNumber {
+    text-shadow: 0 4px 32px rgb(51 51 255 / 0.50),
+                 0 0 8px rgb(51 51 255 / 0.25),
+                 0 0 16px rgb(51 51 255 / 0.25);
+}

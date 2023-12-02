@@ -1,7 +1,27 @@
 .app {
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   height: 100vh;
   background-color: #131316;
   color: #f2f2f3;
+}
+
+.main {
+  margin: 0 auto;
+  width: 1240px;
+  display: flex;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #2f2f37;
+}
+
+::-webkit-scrollbar-thumb {
+  border: 3px solid #8585ad;
+  background: #8585ad;
 }

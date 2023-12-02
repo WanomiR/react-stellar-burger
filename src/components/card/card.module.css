@@ -1,0 +1,30 @@
+.card {
+    width: 272px;
+    height: 208px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+    position: relative;
+    cursor: pointer;
+}
+
+.image {
+    display: block;
+    width: 240px;
+}
+
+.price {
+    display: flex;
+    align-items: center;
+}
+
+.name {
+    text-align: center;
+}
+
+.counter {
+    position: absolute;
+    top: 0;
+    right: 0;
+}

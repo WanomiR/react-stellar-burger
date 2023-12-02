@@ -1,0 +1,9 @@
+.section {
+    width: 600px;
+}
+
+.ingredientsContainer {
+    max-height: calc(100vh - 245px);
+    overflow-y: scroll;
+}
+

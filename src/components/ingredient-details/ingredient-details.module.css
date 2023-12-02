@@ -1,0 +1,12 @@
+.image {
+    display: block;
+}
+
+.tableCell {
+    width: 112px;
+    text-align: center;
+}
+
+.tableCell:first-child {
+    width: 120px;
+}
