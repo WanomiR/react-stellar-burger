@@ -1,6 +1,5 @@
 import {useState} from "react";
 import styles from "./navigation-item.module.css";
-import {navigationItemPropTypes} from "../../utils/prop-types";
 import PropTypes from "prop-types";
 
 export default function NavigationItem({ Icon, itemName, className}) {

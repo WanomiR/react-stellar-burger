@@ -4,10 +4,7 @@ import styles from "./app.module.css";
 import AppHeader from "../header/header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
-import OrderDetails from "../order-details/odrder-details";
-import IngredientDetails from "../ingredient-details/ingredient-details";
 import {getIngredients} from "../../utils/burger-api";
-import Modal from "../modal/modal";
 
 
 function App() {
@@ -72,22 +69,18 @@ function App() {
                 !hasError &&
                 data.length &&
                 <main className={styles.main}>
-                    <BurgerIngredients data={data} openModal={openIngredientDetails}>
-                        {
-                            ingredientDetailsModalState.isOpen &&
-                            <Modal handleModalClose={closeIngredientDetails} title={"Детали ингрединета"}>
-                                <IngredientDetails ingredientData={ingredientDetailsModalState.data}/>
-                            </Modal>
-                        }
-                    </BurgerIngredients>
-                    <BurgerConstructor data={data} openModal={openOrderDetails}>
-                        {
-                            orderDetailsModalState.isOpen &&
-                            <Modal handleModalClose={closeOrderDetails}>
-                                <OrderDetails/>
-                            </Modal>
-                        }
-                    </BurgerConstructor>
+                    <BurgerIngredients
+                        data={data}
+                        openModal={openIngredientDetails}
+                        closeModal={closeIngredientDetails}
+                        modalState={ingredientDetailsModalState}
+                    />
+                    <BurgerConstructor
+                        data={data}
+                        openModal={openOrderDetails}
+                        closeModal={closeOrderDetails}
+                        modalState={orderDetailsModalState}
+                    />
                 </main>
             }
         </div>

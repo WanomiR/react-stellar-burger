@@ -5,9 +5,11 @@ import {ingredientPropType} from "../../utils/prop-types"
 import Tabs from "../tabs/tabs"
 import IngredientsCategory from "../ingredients-category/ingredients-category";
 import PropTypes from "prop-types";
+import Modal from "../modal/modal";
+import IngredientDetails from "../ingredient-details/ingredient-details";
 
 
-export default function BurgerIngredients({data, openModal, children}) {
+export default function BurgerIngredients({data, openModal, closeModal, modalState}) {
     const buns = useMemo(() => data.filter(item => item.type === "bun"), [data]);
     const mains = useMemo(() => data.filter(item => item.type === "main"), [data]);
     const sauces = useMemo(() => data.filter(item => item.type === "sauce"), [data]);
@@ -21,7 +23,12 @@ export default function BurgerIngredients({data, openModal, children}) {
                 <IngredientsCategory ingredients={sauces} categoryName={"Соусы"} openDetails={openModal} />
                 <IngredientsCategory ingredients={mains} categoryName={"Начинки"} openDetails={openModal} />
             </div>
-            {children}
+            {
+                modalState.isOpen &&
+                <Modal handleModalClose={closeModal} title={"Детали ингрединета"}>
+                    <IngredientDetails ingredientData={modalState.data}/>
+                </Modal>
+            }
         </section>
     )
 }
@@ -29,9 +36,6 @@ export default function BurgerIngredients({data, openModal, children}) {
 BurgerIngredients.propTypes = {
     data: PropTypes.arrayOf(ingredientPropType.isRequired).isRequired,
     openModal: PropTypes.func.isRequired,
-    children: PropTypes.oneOfType([
-        PropTypes.elementType,
-        PropTypes.bool,
-        PropTypes.object,
-    ])
+    closeModal: PropTypes.func.isRequired,
+    modalState: PropTypes.object.isRequired,
 };

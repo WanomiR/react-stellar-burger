@@ -4,9 +4,11 @@ import styles from "./burger-constructor.module.css"
 import {ingredientPropType} from "../../utils/prop-types";
 import {Button, ConstructorElement, CurrencyIcon, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components"
 import PropTypes from "prop-types";
+import Modal from "../modal/modal";
+import OrderDetails from "../order-details/odrder-details";
 
 
-export default function BurgerConstructor({data, openModal, children}) {
+export default function BurgerConstructor({data, openModal, closeModal, modalState}) {
 
     const {bun, ingredients} = useMemo(() => ({
             bun: data.find(item => item.type === "bun"),
@@ -49,7 +51,12 @@ export default function BurgerConstructor({data, openModal, children}) {
                 </div>
                 <Button htmlType={"button"} type={"primary"} size={"large"} onClick={openModal}>Оформить заказ</Button>
             </div>
-            {children}
+            {
+                modalState.isOpen &&
+                <Modal handleModalClose={closeModal}>
+                    <OrderDetails/>
+                </Modal>
+            }
         </section>
     )
 }
@@ -57,5 +64,6 @@ export default function BurgerConstructor({data, openModal, children}) {
 BurgerConstructor.propTypes = {
     data: PropTypes.arrayOf(ingredientPropType.isRequired).isRequired,
     openModal: PropTypes.func.isRequired,
-    children: PropTypes.any,
+    closeModal: PropTypes.func.isRequired,
+    modalState: PropTypes.object.isRequired,
 };
