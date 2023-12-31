@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import ingredientsReducer from "./ingredientsSlice"
-import constructorReducer from "./constructorSlice";
+import constructorReducer from "./burgerConstructorSlice";
 import ingredientDetailsReducer from "./ingredientDetailsSlice";
 import orderDetailsReducer from "./orderDetailsSlice";
 
