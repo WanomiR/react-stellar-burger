@@ -3,18 +3,16 @@ import styles from "./card.module.css";
 import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {ingredientPropType} from "../../utils/prop-types"
 import {useDispatch} from "react-redux";
-import {detailsOpened} from "../../services/ingredientDetailsSlice";
+import {ingredientDetailsOpened} from "../../services/ingredientDetailsSlice";
 
 export default function Card({ingredientData}) {
-
     const dispatch = useDispatch();
-
-    const onClick = () => dispatch(detailsOpened(ingredientData))
-
 
     return (
         <li>
-            <article className={`${styles.card}`} onClick={onClick}>
+            <article className={`${styles.card}`}
+                     onClick={() => dispatch(ingredientDetailsOpened(ingredientData))}
+            >
                 <img src={ingredientData.image} alt={`Изображение: ${ingredientData.name}`}
                      className={`${styles.image} ml-4 mr-4`}/>
                 <div className={`${styles.price} mt-2 mb-2`}>

@@ -1,16 +1,17 @@
-import {useMemo} from "react";
+import {useSelector, useDispatch} from "react-redux";
+import {Button, ConstructorElement, CurrencyIcon, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components"
 
 import styles from "./burger-constructor.module.css"
-import {Button, ConstructorElement, CurrencyIcon, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components"
-import PropTypes from "prop-types";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/odrder-details";
-import {useSelector} from "react-redux";
+import {orderDetailsOpened, orderDetailsClosed} from "../../services/orderDetailsSlice";
 
 
-export default function BurgerConstructor({openModal, closeModal, modalState}) {
+export default function BurgerConstructor() {
+    const dispatch = useDispatch();
 
     const { bun, ingredients } = useSelector(state => state.burgerConstructor);
+    const modalIsOpen = useSelector(state => state.orderDetails.isOpen);
 
     let content
 
@@ -54,20 +55,17 @@ export default function BurgerConstructor({openModal, closeModal, modalState}) {
                     <p className={"text text_type_digits-medium mr-2"}>610</p>
                     <CurrencyIcon type={"primary"}/>
                 </div>
-                <Button htmlType={"button"} type={"primary"} size={"large"} onClick={openModal}>Оформить заказ</Button>
+                <Button htmlType={"button"} type={"primary"} size={"large"}
+                        onClick={() => dispatch(orderDetailsOpened())}>
+                    Оформить заказ
+                </Button>
             </div>
             {
-                modalState.isOpen &&
-                <Modal handleModalClose={closeModal}>
+                modalIsOpen &&
+                <Modal handleModalClose={() => dispatch(orderDetailsClosed())}>
                     <OrderDetails/>
                 </Modal>
             }
         </section>
     )
 }
-
-BurgerConstructor.propTypes = {
-    openModal: PropTypes.func.isRequired,
-    closeModal: PropTypes.func.isRequired,
-    modalState: PropTypes.object.isRequired,
-};

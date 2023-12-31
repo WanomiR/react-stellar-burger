@@ -7,6 +7,7 @@ import Tabs from "../tabs/tabs"
 import IngredientsCategory from "../ingredients-category/ingredients-category";
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/IngredientDetails";
+import {ingredientDetailsClosed} from "../../services/ingredientDetailsSlice";
 
 
 export default function BurgerIngredients() {
@@ -55,7 +56,9 @@ export default function BurgerIngredients() {
             <div className={`${styles.ingredientsContainer}`}>{content}</div>
             {
                 modalIsOpen &&
-                <Modal title={"Детали ингрединета"}>
+                <Modal title={"Детали ингрединета"}
+                       handleModalClose={() => dispatch(ingredientDetailsClosed())}
+                >
                     <IngredientDetails />
                 </Modal>
             }

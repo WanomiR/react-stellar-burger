@@ -9,17 +9,20 @@ const ingredientDetailsSlice = createSlice({
     name: "ingredientDetails",
     initialState,
     reducers: {
-        detailsOpened: (state, action) => {
+        ingredientDetailsOpened: (state, action) => {
             state.isOpen = true
             state.ingredientData = action.payload
         },
-        detailsClosed: (state, action) => {
+        ingredientDetailsClosed: (state, action) => {
             state.isOpen = false
             state.ingredientData = {}
         }
     }
 })
 
-export const {detailsOpened, detailsClosed} = ingredientDetailsSlice.actions;
+export const {
+    ingredientDetailsOpened,
+    ingredientDetailsClosed
+} = ingredientDetailsSlice.actions;
 
 export default ingredientDetailsSlice.reducer;
