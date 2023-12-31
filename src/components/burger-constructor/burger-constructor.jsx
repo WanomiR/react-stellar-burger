@@ -10,16 +10,11 @@ import {useSelector} from "react-redux";
 
 export default function BurgerConstructor({openModal, closeModal, modalState}) {
 
-    const { ingredients, status, error } = useSelector(state => state.ingredients)
-
-    const {bun, data} = useMemo(() => ({
-            bun: ingredients.find(item => item.type === "bun"),
-            data: ingredients.filter(item => item.type !== "bun"),
-        }), [ingredients])
+    const { bun, ingredients } = useSelector(state => state.burgerConstructor);
 
     let content
 
-    if (status === "success") {
+    if (true) {
         content = (
             <ul className={`${styles.componentsList}`}>
                 <li className={"ml-4 pl-8"}><ConstructorElement
@@ -30,7 +25,7 @@ export default function BurgerConstructor({openModal, closeModal, modalState}) {
                     type={"top"}
                 /></li>
                 <div className={styles.unlockedComponents}>
-                    {data.map(itemData => (
+                    {ingredients.map(itemData => (
                         <li className={`${styles.component} ml-4`} key={itemData._id}>
                             <DragIcon type={"primary"}/>
                             <ConstructorElement
