@@ -5,15 +5,16 @@ import {fetchIngredients} from "../../services/ingredientsSlice";
 import styles from "./burger-ingredients.module.css"
 import Tabs from "../tabs/tabs"
 import IngredientsCategory from "../ingredients-category/ingredients-category";
-import PropTypes from "prop-types";
 import Modal from "../modal/modal";
-import IngredientDetails from "../ingredient-details/ingredient-details";
+import IngredientDetails from "../ingredient-details/IngredientDetails";
 
 
-export default function BurgerIngredients({openModal, closeModal, modalState}) {
+export default function BurgerIngredients() {
 
     const dispatch = useDispatch();
     const { ingredients, status, error } = useSelector(state => state.ingredients)
+
+    const modalIsOpen = useSelector(state => state.ingredientDetails.isOpen)
 
     useEffect(() => {
         if (status === "idle") {
@@ -32,15 +33,15 @@ export default function BurgerIngredients({openModal, closeModal, modalState}) {
             <>
                 <IngredientsCategory
                     ingredients={ingredients.filter(item => item.type === "bun")}
-                    categoryName={"Булки"} className={"mt-10"} openDetails={openModal}
+                    categoryName={"Булки"} className={"mt-10"}
                 />
                 <IngredientsCategory
                     ingredients={ingredients.filter(item => item.type === "sauce")}
-                    categoryName={"Соусы"} openDetails={openModal}
+                    categoryName={"Соусы"}
                 />
                 <IngredientsCategory
                     ingredients={ingredients.filter(item => item.type === "main")}
-                    categoryName={"Начинки"} openDetails={openModal}
+                    categoryName={"Начинки"}
                 />
             </>
         )
@@ -53,17 +54,11 @@ export default function BurgerIngredients({openModal, closeModal, modalState}) {
             <Tabs />
             <div className={`${styles.ingredientsContainer}`}>{content}</div>
             {
-                modalState.isOpen &&
-                <Modal handleModalClose={closeModal} title={"Детали ингрединета"}>
-                    <IngredientDetails ingredientData={modalState.data}/>
+                modalIsOpen &&
+                <Modal title={"Детали ингрединета"}>
+                    <IngredientDetails />
                 </Modal>
             }
         </section>
     )
-}
-
-BurgerIngredients.propTypes = {
-    openModal: PropTypes.func.isRequired,
-    closeModal: PropTypes.func.isRequired,
-    modalState: PropTypes.object.isRequired,
 };

@@ -1,13 +1,22 @@
 import ModalOverlay from "../modal-overlay/modal-overlay";
 import {useEffect} from "react";
+import {createPortal} from "react-dom";
+import {useDispatch} from "react-redux";
+
 import styles from "./modal.module.css";
 import {CloseIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import {createPortal} from "react-dom";
 import PropTypes from "prop-types";
+import {detailsClosed} from "../../services/ingredientDetailsSlice";
 
 const modalRoot = document.getElementById("root-modal");
 
-export const Modal = ({children, handleModalClose, title}) => {
+export const Modal = ({children, title}) => {
+
+    const dispatch = useDispatch();
+
+    const handleModalClose = () => {
+        dispatch(detailsClosed())
+    }
 
     const handleCloseOnEscape = (e) => {
         if (e.key === "Escape") {
@@ -40,7 +49,6 @@ export const Modal = ({children, handleModalClose, title}) => {
 }
 
 Modal.propTypes = {
-    handleModalClose: PropTypes.func.isRequired,
     title: PropTypes.string,
     children: PropTypes.any,
 }

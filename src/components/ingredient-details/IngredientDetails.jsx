@@ -1,8 +1,12 @@
 import styles from "./ingredient-details.module.css"
-import {ingredientPropType} from "../../utils/prop-types";
+import {useSelector} from "react-redux";
 
-export default function IngredientDetails({ingredientData}) {
-    const {image_large, name, calories, proteins, fat, carbohydrates} = ingredientData;
+export default function IngredientDetails() {
+
+    const {
+        image_large, name, calories, proteins, fat, carbohydrates
+    } = useSelector(state => state.ingredientDetails.ingredientData)
+
     return (
         <>
             <img src={image_large} alt={`Изображение ингридента: ${name}`} className={`${styles.image} mb-4`}/>
@@ -29,6 +33,4 @@ export default function IngredientDetails({ingredientData}) {
     )
 }
 
-IngredientDetails.propTypes = {
-    ingredientData: ingredientPropType,
-}
+
