@@ -6,7 +6,7 @@ import {NORMA_API} from "../utils/constants";
 
 const initialState = {
     ingredients: [],
-    status: 'idle',
+    status: "idle",
     error: null,
 }
 
@@ -25,7 +25,7 @@ export const ingredientsSlice = createSlice({
                state.status = "loading"
            })
            .addCase(fetchIngredients.fulfilled, (state, action) => {
-               state.status = "succeeded"
+               state.status = "success"
                state.ingredients = action.payload.data
            })
            .addCase(fetchIngredients.rejected, (state, action) => {

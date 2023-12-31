@@ -1,9 +1,8 @@
-import React, {useMemo, useEffect } from "react";
+import React, {useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {fetchIngredients} from "../../services/ingredientsSlice";
 
 import styles from "./burger-ingredients.module.css"
-import {ingredientPropType} from "../../utils/prop-types"
 import Tabs from "../tabs/tabs"
 import IngredientsCategory from "../ingredients-category/ingredients-category";
 import PropTypes from "prop-types";
@@ -14,32 +13,35 @@ import IngredientDetails from "../ingredient-details/ingredient-details";
 export default function BurgerIngredients({openModal, closeModal, modalState}) {
 
     const dispatch = useDispatch();
-
-    const ingredients = useSelector(state => state.ingredients.ingredients);
-    const ingredientsStatus = useSelector(state => state.ingredients.status);
+    const { ingredients, status, error } = useSelector(state => state.ingredients)
 
     useEffect(() => {
-        if (ingredientsStatus === "idle") {
+        if (status === "idle") {
             dispatch(fetchIngredients())
         }
-    }, [ingredientsStatus, dispatch]);
+    }, [status, dispatch]);
 
     let content
 
-    if (ingredientsStatus === "loading") {
+    if (status === "loading") {
         content = <span>Loading...</span>
-    } else if (ingredientsStatus === "failed") {
-        content = <span>Failed :(</span>
-    } else if (ingredientsStatus === "succeeded") {
-        const buns = ingredients.filter(item => item.type === "bun")
-        const mains = ingredients.filter(item => item.type === "main")
-        const sauces = ingredients.filter(item => item.type === "sauce")
-
+    } else if (status === "failed") {
+        content = <span>Failed :( Error message: {error}</span>
+    } else if (status === "success") {
         content = (
             <>
-                <IngredientsCategory ingredients={buns} categoryName={"Булки"} className={"mt-10"} openDetails={openModal}/>
-                <IngredientsCategory ingredients={sauces} categoryName={"Соусы"} openDetails={openModal} />
-                <IngredientsCategory ingredients={mains} categoryName={"Начинки"} openDetails={openModal} />
+                <IngredientsCategory
+                    ingredients={ingredients.filter(item => item.type === "bun")}
+                    categoryName={"Булки"} className={"mt-10"} openDetails={openModal}
+                />
+                <IngredientsCategory
+                    ingredients={ingredients.filter(item => item.type === "sauce")}
+                    categoryName={"Соусы"} openDetails={openModal}
+                />
+                <IngredientsCategory
+                    ingredients={ingredients.filter(item => item.type === "main")}
+                    categoryName={"Начинки"} openDetails={openModal}
+                />
             </>
         )
 
@@ -49,7 +51,7 @@ export default function BurgerIngredients({openModal, closeModal, modalState}) {
         <section className={styles.section}>
             <h1 className={"text text_type_main-large mt-10 mb-5"}>Соберите бургер</h1>
             <Tabs />
-            <div className={`${styles.ingredientsContainer} `}>{content}</div>
+            <div className={`${styles.ingredientsContainer}`}>{content}</div>
             {
                 modalState.isOpen &&
                 <Modal handleModalClose={closeModal} title={"Детали ингрединета"}>
