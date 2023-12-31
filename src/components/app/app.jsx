@@ -70,7 +70,6 @@ function App() {
                 data.length &&
                 <main className={styles.main}>
                     <BurgerIngredients
-                        data={data}
                         openModal={openIngredientDetails}
                         closeModal={closeIngredientDetails}
                         modalState={ingredientDetailsModalState}
