@@ -6,7 +6,6 @@ const initialState = {
     modalIsOpen: false,
     status: "idle",
     error: null,
-    orderDetails: {}
     // orderId: "034536",
     // status: "Ваш заказ начали готовить",
     // message: "Дождитесь готовности на орбитальной станции"
@@ -43,7 +42,7 @@ const orderDetailsSlice = createSlice({
             })
             .addCase(fetchOrderDetails.fulfilled, (state, action) => {
                 state.status = "success"
-                state.orderDetails = action.payload
+                Object.assign(state, action.payload);
             })
             .addCase(fetchOrderDetails.rejected, (state, action) => {
                 state.status = "failed"
