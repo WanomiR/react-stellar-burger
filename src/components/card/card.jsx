@@ -1,16 +1,27 @@
 import React from "react";
+import {useDispatch} from "react-redux";
+import {useDrag} from "react-dnd";
+
 import styles from "./card.module.css";
 import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {ingredientPropType} from "../../utils/prop-types"
-import {useDispatch} from "react-redux";
 import {ingredientDetailsOpened} from "../../services/ingredientDetailsSlice";
 
 export default function Card({ingredientData}) {
     const dispatch = useDispatch();
+    const count = ingredientData.count;
+
+    const [{isDrag}, dragRef] = useDrag({
+        type: "default",
+        item: ingredientData,
+        collect: monitor => ({
+            isDrag: monitor.isDragging()
+        }),
+    });
 
     return (
         <li>
-            <article className={`${styles.card}`}
+            <article className={`${styles.card}`} ref={dragRef}
                      onClick={() => dispatch(ingredientDetailsOpened(ingredientData))}
             >
                 <img src={ingredientData.image} alt={`Изображение: ${ingredientData.name}`}
@@ -20,7 +31,9 @@ export default function Card({ingredientData}) {
                     <CurrencyIcon type={"primary"}/>
                 </div>
                 <p className={`${styles.name} text text_type_main-default`}>{ingredientData.name}</p>
-                <Counter count={1} size={"default"} extraCalss={styles.counter}/>
+                {!!count &&
+                    <Counter count={count} size={"default"} extraCalss={styles.counter}/>
+                }
             </article>
         </li>
     )

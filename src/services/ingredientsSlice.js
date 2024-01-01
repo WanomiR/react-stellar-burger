@@ -1,6 +1,7 @@
 import {
     createSlice,
-    createAsyncThunk
+    createAsyncThunk,
+    nanoid
 } from "@reduxjs/toolkit";
 import {NORMA_API} from "../utils/constants";
 
@@ -18,7 +19,17 @@ export const fetchIngredients = createAsyncThunk("ingredients/fetchIngredients",
 export const ingredientsSlice = createSlice({
     name: "ingredients",
     initialState,
-    reducers: {},
+    reducers: {
+        countIncremented: (state, action) => {
+            state.ingredients.find(item => item.id === action.payload.id).count++
+            if (action.payload.type === "bun") state.ingredients
+                    .find(item => item.type === "bun" && item.id !== action.payload.id)
+                    .count = 0
+        },
+        countDecremented: (state, action) => {
+            state.ingredients.find(item => item.id === action.payload.id).count--
+        },
+    },
     extraReducers(builder) {
        builder
            .addCase(fetchIngredients.pending, (state, action) => {
@@ -26,7 +37,9 @@ export const ingredientsSlice = createSlice({
            })
            .addCase(fetchIngredients.fulfilled, (state, action) => {
                state.status = "success"
-               state.ingredients = action.payload.data
+               state.ingredients = action.payload.data.map(item => ({
+                   ...item, id: item._id, count: 0,
+               }))
            })
            .addCase(fetchIngredients.rejected, (state, action) => {
                state.status = "failed"
@@ -34,5 +47,9 @@ export const ingredientsSlice = createSlice({
            })
     }
 });
+
+export const {
+    countIncremented, countDecremented
+} = ingredientsSlice.actions;
 
 export default ingredientsSlice.reducer;
