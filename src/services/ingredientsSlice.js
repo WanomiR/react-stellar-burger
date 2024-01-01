@@ -21,10 +21,12 @@ export const ingredientsSlice = createSlice({
     initialState,
     reducers: {
         countIncremented: (state, action) => {
-            state.ingredients.find(item => item.id === action.payload.id).count++
-            if (action.payload.type === "bun") state.ingredients
-                    .find(item => item.type === "bun" && item.id !== action.payload.id)
+            state.ingredients.find(item => item._id === action.payload._id).count++
+            if (action.payload.type === "bun") {
+                state.ingredients
+                    .find(item => item.type === "bun" && item._id !== action.payload._id)
                     .count = 0
+            }
         },
         countDecremented: (state, action) => {
             state.ingredients.find(item => item.id === action.payload.id).count--
@@ -38,7 +40,7 @@ export const ingredientsSlice = createSlice({
            .addCase(fetchIngredients.fulfilled, (state, action) => {
                state.status = "success"
                state.ingredients = action.payload.data.map(item => ({
-                   ...item, id: item._id, count: 0,
+                   ...item, count: 0,
                }))
            })
            .addCase(fetchIngredients.rejected, (state, action) => {

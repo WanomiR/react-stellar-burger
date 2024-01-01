@@ -51,7 +51,7 @@ export default function BurgerConstructor() {
                 {ingredients &&
                     <div className={styles.unlockedComponents}>
                         {ingredients.map(itemData => (
-                            <li className={`${styles.component} ml-4`} key={itemData._id}>
+                            <li className={`${styles.component} ml-4`} key={itemData.nanoId}>
                                 <DragIcon type={"primary"}/>
                                 <ConstructorElement
                                     text={`${itemData.name}`}

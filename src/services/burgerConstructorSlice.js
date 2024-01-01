@@ -17,11 +17,11 @@ const burgerConstructorSlice = createSlice({
                 state.ingredients.push(action.payload)
             },
             prepare: (item) => ({
-                payload: {...item, _id: nanoid(),}
+                payload: {...item, nanoId: nanoid()}
             })
         },
         ingredientRemoved: (state, action) => {
-            state.ingredients = state.ingredients.filter(item => item._id !== action.payload._id)
+            state.ingredients = state.ingredients.filter(item => item.nanoId !== action.payload.nanoId)
         }
     }
 })
