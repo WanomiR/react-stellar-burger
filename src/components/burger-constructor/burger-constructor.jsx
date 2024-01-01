@@ -1,21 +1,29 @@
 import {useSelector, useDispatch} from "react-redux";
 import {useMemo} from "react";
 import {useDrop} from "react-dnd";
-import {Button, ConstructorElement, CurrencyIcon, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components"
+import {
+    Button, ConstructorElement, CurrencyIcon, DragIcon
+} from "@ya.praktikum/react-developer-burger-ui-components"
 
 import styles from "./burger-constructor.module.css"
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/odrder-details";
-import {orderDetailsOpened, orderDetailsClosed, fetchOrderDetails} from "../../services/orderDetailsSlice";
-import {bunUpdated, ingredientAdded, ingredientRemoved} from "../../services/burgerConstructorSlice";
-import {countDecremented, countIncremented} from "../../services/ingredientsSlice";
+import {
+    orderDetailsOpened, orderDetailsClosed, fetchOrderDetails
+} from "../../services/orderDetailsSlice";
+import {
+    bunUpdated, ingredientAdded, ingredientRemoved
+} from "../../services/burgerConstructorSlice";
+import {
+    countDecremented, countIncremented
+} from "../../services/ingredientsSlice";
 
 
 export default function BurgerConstructor() {
     const dispatch = useDispatch();
 
     const {bun, ingredients} = useSelector(state => state.burgerConstructor);
-    const  {modalIsOpen} = useSelector(state => state.orderDetails);
+    const {modalIsOpen} = useSelector(state => state.orderDetails);
 
     const totalPrice = useMemo(() => {
         const isBun = !!bun;
@@ -25,7 +33,7 @@ export default function BurgerConstructor() {
             areIngredients ?  // are there any ingredients ?
                 ingredients.reduce((acc, item) => acc += item.price, 0) + bun.price * 2  // calculate the total if so
                 : bun.price * 2  // otherwise it is just the price for two buns
-           : areIngredients ?  // there is no bun, are there any ingredients ?
+            : areIngredients ?  // there is no bun, are there any ingredients ?
                 ingredients.reduce((acc, item) => acc += item.price, 0)  // calculate the total if so
                 : 0  // otherwise return zero
     }, [bun, ingredients])
@@ -100,8 +108,12 @@ export default function BurgerConstructor() {
                     <p className={"text text_type_digits-medium mr-2"}>{totalPrice}</p>
                     <CurrencyIcon type={"primary"}/>
                 </div>
-                <Button htmlType={"button"} type={"primary"} size={"large"}
-                        onClick={handleOpenDetails}>
+                <Button
+                    htmlType={"button"}
+                    type={"primary"}
+                    size={"large"}
+                    onClick={handleOpenDetails}
+                >
                     Оформить заказ
                 </Button>
             </div>

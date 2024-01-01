@@ -6,9 +6,6 @@ const initialState = {
     modalIsOpen: false,
     status: "idle",
     error: null,
-    // orderId: "034536",
-    // status: "Ваш заказ начали готовить",
-    // message: "Дождитесь готовности на орбитальной станции"
 }
 
 export const fetchOrderDetails =

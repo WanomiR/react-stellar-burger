@@ -1,17 +1,32 @@
-import React from "react";
+import React, {useEffect, useRef} from "react";
+import {useDispatch} from "react-redux";
 import PropTypes from "prop-types";
 
 import styles from "./ingredients-category.module.css"
 import {ingredientPropType} from "../../utils/prop-types"
 import Card from "../card/card";
+import {activeTabSelected} from "../../services/ingredientsSlice";
 
 export default function IngredientsCategory({ingredients, categoryName, className}) {
+
+    const dispatch = useDispatch();
+    const ref = useRef();
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(([entry]) => {
+                if (entry.isIntersecting) {
+                    dispatch(activeTabSelected(categoryName))
+                }
+            }
+        );
+        observer.observe(ref.current);
+    }, [ref])
 
     return (
         <>
             <h2 className={`${className} text text_type_main-medium`}>{categoryName}</h2>
-            <ul className={`${styles.cards} mt-6 mb-10 pl-4`}>
-                {ingredients.map(itemData => (<Card ingredientData={itemData} key={itemData._id} />))}
+            <ul className={`${styles.cards} mt-6 mb-10 pl-4`} ref={ref}>
+                {ingredients.map(itemData => (<Card ingredientData={itemData} key={itemData._id}/>))}
             </ul>
         </>
     )

@@ -1,5 +1,5 @@
-import React, {useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, {useEffect, useRef} from "react";
+import {useSelector, useDispatch} from "react-redux";
 import {fetchIngredients} from "../../services/ingredientsSlice";
 
 import styles from "./burger-ingredients.module.css"
@@ -13,7 +13,7 @@ import {ingredientDetailsClosed} from "../../services/ingredientDetailsSlice";
 export default function BurgerIngredients() {
 
     const dispatch = useDispatch();
-    const { ingredients, status, error } = useSelector(state => state.ingredients)
+    const {ingredients, status, error} = useSelector(state => state.ingredients)
 
     const modalIsOpen = useSelector(state => state.ingredientDetails.isOpen)
 
@@ -23,12 +23,18 @@ export default function BurgerIngredients() {
         }
     }, [status, dispatch]);
 
+
+
     let content
 
     if (status === "loading") {
-        content = <span>Loading...</span>
+        content =
+            <p className={"text text_type_main-default pt-15 pb-30"}>Подождите, идет загрузка...</p>
     } else if (status === "failed") {
-        content = <span>Failed :( Error message: {error}</span>
+        content = (<>
+            <p className={"text text_type_main-default pt-15 pb-2"}>Произошла ошибка:</p>
+            <p className={"text text_type_main-default text_color_inactive pb-30"}>{error}</p>
+        </>)
     } else if (status === "success") {
         content = (
             <>
@@ -58,7 +64,7 @@ export default function BurgerIngredients() {
                 <Modal title={"Детали ингрединета"}
                        handleModalClose={() => dispatch(ingredientDetailsClosed())}
                 >
-                    <IngredientDetails />
+                    <IngredientDetails/>
                 </Modal>
             }
         </section>

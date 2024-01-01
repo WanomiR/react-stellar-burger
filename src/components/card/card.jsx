@@ -7,7 +7,7 @@ import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-com
 import {ingredientPropType} from "../../utils/prop-types"
 import {ingredientDetailsOpened} from "../../services/ingredientDetailsSlice";
 
-export default function Card({ingredientData}) {
+export default function Card({ingredientData, ref}) {
     const dispatch = useDispatch();
     const count = ingredientData.count;
 

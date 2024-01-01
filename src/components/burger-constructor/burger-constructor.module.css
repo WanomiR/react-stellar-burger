@@ -9,12 +9,13 @@
     display: flex;
     flex-direction: column;
     gap: 16px;
+    height: calc(100vh - 415px);
 }
 
 .unlockedComponents {
     composes: componentsList;
+    height: auto;
     overflow-y: scroll;
-    height: calc(100vh - 615px);
 }
 
 .component {
@@ -26,6 +27,7 @@
 .order {
     display: flex;
     justify-content: flex-end;
+    align-self: end;
 }
 
 .total {

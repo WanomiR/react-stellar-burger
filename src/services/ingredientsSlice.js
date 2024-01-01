@@ -9,6 +9,7 @@ const initialState = {
     ingredients: [],
     status: "idle",
     error: null,
+    activeTab: "Булки"
 }
 
 export const fetchIngredients = createAsyncThunk("ingredients/fetchIngredients", async () => {
@@ -31,6 +32,9 @@ export const ingredientsSlice = createSlice({
         countDecremented: (state, action) => {
             state.ingredients.find(item => item._id === action.payload._id).count--
         },
+        activeTabSelected: (state, action) => {
+            state.activeTab = action.payload
+        }
     },
     extraReducers: builder => {
        builder
@@ -51,7 +55,9 @@ export const ingredientsSlice = createSlice({
 });
 
 export const {
-    countIncremented, countDecremented
+    countIncremented,
+    countDecremented,
+    activeTabSelected
 } = ingredientsSlice.actions;
 
 export default ingredientsSlice.reducer;

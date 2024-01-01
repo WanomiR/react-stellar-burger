@@ -17,11 +17,15 @@ export default function OrderDetails() {
         </>)
     } else if ((status === "success") && success) {
         content = (<>
-            <h2 className={`${styles.orderNumber} text text_type_digits-large pt-15 pb-8`}>{order.number}</h2>
+            <h2 className={`${styles.orderNumber} text text_type_digits-large pt-15 pb-8`}>
+                {order.number}
+            </h2>
             <p className={"text text_type_main-medium pb-15"}>индентификатор заказа</p>
             <img src={doneIcon} alt={"Иконка с гаолчкой"} className={"pb-15"}/>
             <p className={"text text_type_main-default pb-2"}>Ваш заказ начали готовить</p>
-            <p className={"text text_type_main-default text_color_inactive pb-30"}>{name}</p>
+            <p className={
+                `text text_type_main-default text_color_inactive pb-30 ${styles.additionalText}`
+            }>{name}</p>
         </>)
     }
 
