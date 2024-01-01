@@ -6,7 +6,7 @@ import {Button, ConstructorElement, CurrencyIcon, DragIcon} from "@ya.praktikum/
 import styles from "./burger-constructor.module.css"
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/odrder-details";
-import {orderDetailsOpened, orderDetailsClosed} from "../../services/orderDetailsSlice";
+import {orderDetailsOpened, orderDetailsClosed, fetchOrderDetails} from "../../services/orderDetailsSlice";
 import {bunUpdated, ingredientAdded, ingredientRemoved} from "../../services/burgerConstructorSlice";
 import {countDecremented, countIncremented} from "../../services/ingredientsSlice";
 
@@ -25,7 +25,7 @@ export default function BurgerConstructor() {
             areIngredients ?  // are there any ingredients ?
                 ingredients.reduce((acc, item) => acc += item.price, 0) + bun.price * 2  // calculate the total if so
                 : bun.price * 2  // otherwise it is just the price for two buns
-           : areIngredients ?  // in case there is no bun, are there any ingredients ?
+           : areIngredients ?  // there is no bun, are there any ingredients ?
                 ingredients.reduce((acc, item) => acc += item.price, 0)  // calculate the total if so
                 : 0  // otherwise return zero
     }, [bun, ingredients])
@@ -35,6 +35,15 @@ export default function BurgerConstructor() {
             ? dispatch(bunUpdated(item))
             : dispatch(ingredientRemoved(item))
         dispatch(countDecremented(item))
+    }
+
+    const handleOpenDetails = () => {
+        if (!!bun && ingredients.length > 0) {
+            dispatch(fetchOrderDetails(
+                ingredients.map(item => item._id).concat(bun._id)
+            ))
+            dispatch(orderDetailsOpened())
+        }
     }
 
     const [{isHover}, dropRef] = useDrop({
@@ -92,7 +101,7 @@ export default function BurgerConstructor() {
                     <CurrencyIcon type={"primary"}/>
                 </div>
                 <Button htmlType={"button"} type={"primary"} size={"large"}
-                        onClick={() => dispatch(orderDetailsOpened())}>
+                        onClick={handleOpenDetails}>
                     Оформить заказ
                 </Button>
             </div>

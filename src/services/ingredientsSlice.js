@@ -32,9 +32,9 @@ export const ingredientsSlice = createSlice({
             state.ingredients.find(item => item._id === action.payload._id).count--
         },
     },
-    extraReducers(builder) {
+    extraReducers: builder => {
        builder
-           .addCase(fetchIngredients.pending, (state, action) => {
+           .addCase(fetchIngredients.pending, state => {
                state.status = "loading"
            })
            .addCase(fetchIngredients.fulfilled, (state, action) => {
