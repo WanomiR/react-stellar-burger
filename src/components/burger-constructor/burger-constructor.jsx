@@ -1,4 +1,5 @@
 import {useSelector, useDispatch} from "react-redux";
+import {useMemo} from "react";
 import {useDrop} from "react-dnd";
 import {Button, ConstructorElement, CurrencyIcon, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components"
 
@@ -15,6 +16,12 @@ export default function BurgerConstructor() {
 
     const {bun, ingredients} = useSelector(state => state.burgerConstructor);
     const modalIsOpen = useSelector(state => state.orderDetails.isOpen);
+
+    const totalPrice = useMemo(() => {
+        return (!!bun || ingredients.length > 0)
+            ? ingredients.reduce((acc, item) => acc += item.price, 0) + bun.price * 2
+            : 0
+    }, [bun, ingredients])
 
     const handleDelete = item => () => {
         item.type === "bun"
@@ -74,7 +81,7 @@ export default function BurgerConstructor() {
             </ul>
             <div className={`${styles.order} mt-10 mr-4`}>
                 <div className={`${styles.total} mr-10`}>
-                    <p className={"text text_type_digits-medium mr-2"}>610</p>
+                    <p className={"text text_type_digits-medium mr-2"}>{totalPrice}</p>
                     <CurrencyIcon type={"primary"}/>
                 </div>
                 <Button htmlType={"button"} type={"primary"} size={"large"}

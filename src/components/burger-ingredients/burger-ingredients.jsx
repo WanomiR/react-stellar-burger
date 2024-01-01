@@ -6,7 +6,7 @@ import styles from "./burger-ingredients.module.css"
 import Tabs from "../tabs/tabs"
 import IngredientsCategory from "../ingredients-category/ingredients-category";
 import Modal from "../modal/modal";
-import IngredientDetails from "../ingredient-details/IngredientDetails";
+import IngredientDetails from "../ingredient-details/ingredient-details";
 import {ingredientDetailsClosed} from "../../services/ingredientDetailsSlice";
 
 

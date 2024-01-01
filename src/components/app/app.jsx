@@ -3,7 +3,7 @@ import {DndProvider} from "react-dnd";
 import {HTML5Backend} from "react-dnd-html5-backend";
 
 import AppHeader from "../header/header";
-import BurgerIngredients from "../burger-ingredients/BurgerIngredients";
+import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 
 function App() {
