@@ -15,12 +15,19 @@ export default function BurgerConstructor() {
     const dispatch = useDispatch();
 
     const {bun, ingredients} = useSelector(state => state.burgerConstructor);
-    const modalIsOpen = useSelector(state => state.orderDetails.isOpen);
+    const  {modalIsOpen} = useSelector(state => state.orderDetails);
 
     const totalPrice = useMemo(() => {
-        return (!!bun || ingredients.length > 0)
-            ? ingredients.reduce((acc, item) => acc += item.price, 0) + bun.price * 2
-            : 0
+        const isBun = !!bun;
+        const areIngredients = ingredients.length > 0;
+
+        return isBun ?  // is there a bun?
+            areIngredients ?  // are there any ingredients ?
+                ingredients.reduce((acc, item) => acc += item.price, 0) + bun.price * 2  // calculate the total if so
+                : bun.price * 2  // otherwise it is just the price for two buns
+           : areIngredients ?  // in case there is no bun, are there any ingredients ?
+                ingredients.reduce((acc, item) => acc += item.price, 0)  // calculate the total if so
+                : 0  // otherwise return zero
     }, [bun, ingredients])
 
     const handleDelete = item => () => {

@@ -29,7 +29,7 @@ export const ingredientsSlice = createSlice({
             }
         },
         countDecremented: (state, action) => {
-            state.ingredients.find(item => item.id === action.payload.id).count--
+            state.ingredients.find(item => item._id === action.payload._id).count--
         },
     },
     extraReducers(builder) {
