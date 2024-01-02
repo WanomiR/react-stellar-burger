@@ -1,28 +1,34 @@
-import React from "react";
+import React, {useRef, useState} from "react";
 import {useDispatch} from "react-redux";
 import {useDrag} from "react-dnd";
 
 import styles from "./card.module.css";
 import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {ingredientPropType} from "../../utils/prop-types"
-import {ingredientDetailsOpened} from "../../services/ingredientDetailsSlice";
+import {ingredientDetailsOpened, modalOpacitySet} from "../../services/ingredientDetailsSlice";
 
-export default function Card({ingredientData, ref}) {
+export default function Card({ingredientData}) {
     const dispatch = useDispatch();
-    const count = ingredientData.count;
 
     const [{isDrag}, dragRef] = useDrag({
-        type: "default",
+        type: "ingredient",
         item: ingredientData,
         collect: monitor => ({
             isDrag: monitor.isDragging()
         }),
     });
 
+    const handleOpenModal = () => {
+        dispatch(modalOpacitySet(0))
+        dispatch(ingredientDetailsOpened(ingredientData));
+    }
+
+    const opacity = isDrag ? 0.3 : 1
+
     return (
         <li>
-            <article className={`${styles.card}`} ref={dragRef}
-                     onClick={() => dispatch(ingredientDetailsOpened(ingredientData))}
+            <article className={`${styles.card}`} ref={dragRef} style={{opacity}}
+                     onClick={handleOpenModal}
             >
                 <img src={ingredientData.image} alt={`Изображение: ${ingredientData.name}`}
                      className={`${styles.image} ml-4 mr-4`}/>
@@ -31,8 +37,8 @@ export default function Card({ingredientData, ref}) {
                     <CurrencyIcon type={"primary"}/>
                 </div>
                 <p className={`${styles.name} text text_type_main-default`}>{ingredientData.name}</p>
-                {!!count &&
-                    <Counter count={count} size={"default"} extraCalss={styles.counter}/>
+                {!!ingredientData.count &&
+                    <Counter count={ingredientData.count} size={"default"} extraCalss={styles.counter}/>
                 }
             </article>
         </li>

@@ -2,6 +2,7 @@ import {createSlice} from "@reduxjs/toolkit";
 
 const initialState = {
     isOpen: false,
+    modalOpacity: 1,
     ingredientData: {}
 }
 
@@ -16,13 +17,17 @@ const ingredientDetailsSlice = createSlice({
         ingredientDetailsClosed: (state, action) => {
             state.isOpen = false
             state.ingredientData = {}
+        },
+        modalOpacitySet: (state, action) => {
+            state.modalOpacity = action.payload
         }
     }
 })
 
 export const {
     ingredientDetailsOpened,
-    ingredientDetailsClosed
+    ingredientDetailsClosed,
+    modalOpacitySet
 } = ingredientDetailsSlice.actions;
 
 export default ingredientDetailsSlice.reducer;

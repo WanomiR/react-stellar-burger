@@ -1,23 +1,15 @@
-import {useSelector, useDispatch} from "react-redux";
 import {useCallback, useEffect, useMemo, useState} from "react";
+import {useSelector, useDispatch} from "react-redux";
 import {useDrop} from "react-dnd";
-import {
-    Button, ConstructorElement, CurrencyIcon, DragIcon
-} from "@ya.praktikum/react-developer-burger-ui-components"
+import {Button, ConstructorElement, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components"
 
 import styles from "./burger-constructor.module.css"
+import {orderDetailsOpened, orderDetailsClosed, fetchOrderDetails} from "../../services/orderDetailsSlice";
+import {bunUpdated, ingredientAdded, ingredientsReordered} from "../../services/burgerConstructorSlice";
+import {countIncremented} from "../../services/ingredientsSlice";
+import {DraggableElement} from "../draggable-element/draggable-element";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/odrder-details";
-import {
-    orderDetailsOpened, orderDetailsClosed, fetchOrderDetails
-} from "../../services/orderDetailsSlice";
-import {
-    bunUpdated, ingredientAdded, ingredientRemoved, ingredientsReordered
-} from "../../services/burgerConstructorSlice";
-import {
-    countDecremented, countIncremented
-} from "../../services/ingredientsSlice";
-import {DraggableElement} from "../draggable-element/draggable-element";
 
 
 export default function BurgerConstructor() {
@@ -59,7 +51,7 @@ export default function BurgerConstructor() {
     }
 
     const [{isHover}, dropRef] = useDrop({
-        accept: "default",
+        accept: "ingredient",
         collect: monitor => ({isHoverMain: monitor.isOver()}),
         drop: item => {
             if (item.type === "bun") {
@@ -112,16 +104,6 @@ export default function BurgerConstructor() {
                 {items &&
                     <div className={styles.unlockedComponents}>
                         {items.map((item, i) => renderElement(item, i))}
-                        {/*{ingredients.map(itemData => (*/}
-                        {/*    <li className={`${styles.component} ml-4`} key={itemData.nanoId}>*/}
-                        {/*        <DragIcon type={"primary"}/>*/}
-                        {/*        <ConstructorElement*/}
-                        {/*            text={`${itemData.name}`}*/}
-                        {/*            thumbnail={itemData.image_mobile}*/}
-                        {/*            price={itemData.price}*/}
-                        {/*            handleClose={handleDelete(itemData)}*/}
-                        {/*        /></li>*/}
-                        {/*))}*/}
                     </div>
                 }
                 {bun &&
