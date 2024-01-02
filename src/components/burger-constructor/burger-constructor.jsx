@@ -96,9 +96,9 @@ export default function BurgerConstructor() {
     return (
         <section className={`${styles.section} ml-10 mt-20`} ref={dropRef}
         >
-            <ul className={`${styles.componentsList}`} style={{...borderStyle}}>
+            <ul className={`${styles.componentsList} mb-5`} style={{...borderStyle}}>
                 {bun &&
-                    <li className={"ml-4 mt-5 pl-8"}><ConstructorElement
+                    <li className={"ml-4 pl-8"}><ConstructorElement
                         text={`${bun.name} (верх)`}
                         thumbnail={bun.image_mobile}
                         price={bun.price}
@@ -112,7 +112,7 @@ export default function BurgerConstructor() {
                     </div>
                 }
                 {bun &&
-                    <li className={"pl-8 ml-4 mb-5"}><ConstructorElement
+                    <li className={"pl-8 ml-4"}><ConstructorElement
                         text={`${bun.name} (низ)`}
                         thumbnail={bun.image_mobile}
                         price={bun.price}

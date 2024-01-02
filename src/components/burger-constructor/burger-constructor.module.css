@@ -4,7 +4,7 @@
 
 .componentsList {
     list-style: none;
-    padding: 0;
+    padding: 20px 0 0 0;
     margin: 0;
     display: flex;
     flex-direction: column;
@@ -13,7 +13,10 @@
 }
 
 .unlockedComponents {
-    composes: componentsList;
+    /*composes: componentsList;*/
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
     height: auto;
     overflow-y: scroll;
 }
