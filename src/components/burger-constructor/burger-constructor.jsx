@@ -52,7 +52,7 @@ export default function BurgerConstructor() {
 
     const [{isHover}, dropRef] = useDrop({
         accept: "ingredient",
-        collect: monitor => ({isHoverMain: monitor.isOver()}),
+        collect: monitor => ({isHover: monitor.isOver()}),
         drop: item => {
             if (item.type === "bun") {
                 if (!bun || (item._id !== bun._id)) {
@@ -85,15 +85,20 @@ export default function BurgerConstructor() {
         )
     }, [])
 
-
+    let borderStyle
+    isHover
+        ? borderStyle = {
+            borderRadius: "2rem",
+            boxShadow: "0px 4px 32px 0px rgba(101, 101, 255, 0.25), 0px 0px 8px 8px rgba(101, 101, 255, 0.125), 0px 0px 16px 8px rgba(101, 101, 255, 0.125)"
+        }
+        : borderStyle = { border: "none" }
 
     return (
-        <section className={`${styles.section} ml-10 mt-25`}
-                 ref={dropRef}
+        <section className={`${styles.section} ml-10 mt-20`} ref={dropRef}
         >
-            <ul className={`${styles.componentsList}`}>
+            <ul className={`${styles.componentsList}`} style={{...borderStyle}}>
                 {bun &&
-                    <li className={"ml-4 pl-8"}><ConstructorElement
+                    <li className={"ml-4 mt-5 pl-8"}><ConstructorElement
                         text={`${bun.name} (верх)`}
                         thumbnail={bun.image_mobile}
                         price={bun.price}
@@ -107,7 +112,7 @@ export default function BurgerConstructor() {
                     </div>
                 }
                 {bun &&
-                    <li className={"pl-8 ml-4"}><ConstructorElement
+                    <li className={"pl-8 ml-4 mb-5"}><ConstructorElement
                         text={`${bun.name} (низ)`}
                         thumbnail={bun.image_mobile}
                         price={bun.price}
@@ -116,7 +121,7 @@ export default function BurgerConstructor() {
                     /></li>
                 }
             </ul>
-            <div className={`${styles.order} mt-10 mr-4`}>
+            <div className={`${styles.order} mt-5 mr-4`}>
                 <div className={`${styles.total} mr-10`}>
                     <p className={"text text_type_digits-medium mr-2"}>{totalPrice}</p>
                     <CurrencyIcon type={"primary"}/>
