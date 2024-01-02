@@ -1,0 +1,16 @@
+.component {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.order {
+    display: flex;
+    justify-content: flex-end;
+    align-self: end;
+}
+
+.total {
+    display: flex;
+    align-items: center;
+}

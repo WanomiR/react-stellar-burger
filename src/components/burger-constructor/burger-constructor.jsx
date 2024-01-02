@@ -1,5 +1,5 @@
 import {useSelector, useDispatch} from "react-redux";
-import {useMemo} from "react";
+import {useCallback, useEffect, useMemo, useState} from "react";
 import {useDrop} from "react-dnd";
 import {
     Button, ConstructorElement, CurrencyIcon, DragIcon
@@ -12,11 +12,12 @@ import {
     orderDetailsOpened, orderDetailsClosed, fetchOrderDetails
 } from "../../services/orderDetailsSlice";
 import {
-    bunUpdated, ingredientAdded, ingredientRemoved
+    bunUpdated, ingredientAdded, ingredientRemoved, ingredientsReordered
 } from "../../services/burgerConstructorSlice";
 import {
     countDecremented, countIncremented
 } from "../../services/ingredientsSlice";
+import {DraggableElement} from "../draggable-element/draggable-element";
 
 
 export default function BurgerConstructor() {
@@ -24,6 +25,16 @@ export default function BurgerConstructor() {
 
     const {bun, ingredients} = useSelector(state => state.burgerConstructor);
     const {modalIsOpen} = useSelector(state => state.orderDetails);
+
+    const [items, setItems] = useState(ingredients)
+
+    useEffect(() => {
+        dispatch(ingredientsReordered(items))
+    }, [items]);
+
+    useEffect(() => {
+        setItems(ingredients)
+    }, [ingredients]);
 
     const totalPrice = useMemo(() => {
         const isBun = !!bun;
@@ -37,13 +48,6 @@ export default function BurgerConstructor() {
                 ingredients.reduce((acc, item) => acc += item.price, 0)  // calculate the total if so
                 : 0  // otherwise return zero
     }, [bun, ingredients])
-
-    const handleDelete = item => () => {
-        item.type === "bun"
-            ? dispatch(bunUpdated(item))
-            : dispatch(ingredientRemoved(item))
-        dispatch(countDecremented(item))
-    }
 
     const handleOpenDetails = () => {
         if (!!bun && ingredients.length > 0) {
@@ -70,6 +74,27 @@ export default function BurgerConstructor() {
         }
     })
 
+    const moveElement = useCallback((dragIndex, hoverIndex) => {
+        setItems((prevCards) => (
+            prevCards
+                .toSpliced(dragIndex, 1)
+                .toSpliced(hoverIndex, 0, prevCards[dragIndex])
+        ))
+    }, [ingredients])
+
+    const renderElement = useCallback((item, index) => {
+        return (
+            <DraggableElement
+                key={item.nanoId}
+                itemData={item}
+                index={index}
+                moveElement={moveElement}
+            />
+        )
+    }, [])
+
+
+
     return (
         <section className={`${styles.section} ml-10 mt-25`}
                  ref={dropRef}
@@ -84,18 +109,19 @@ export default function BurgerConstructor() {
                         type={"top"}
                     /></li>
                 }
-                {ingredients &&
+                {items &&
                     <div className={styles.unlockedComponents}>
-                        {ingredients.map(itemData => (
-                            <li className={`${styles.component} ml-4`} key={itemData.nanoId}>
-                                <DragIcon type={"primary"}/>
-                                <ConstructorElement
-                                    text={`${itemData.name}`}
-                                    thumbnail={itemData.image_mobile}
-                                    price={itemData.price}
-                                    handleClose={handleDelete(itemData)}
-                                /></li>
-                        ))}
+                        {items.map((item, i) => renderElement(item, i))}
+                        {/*{ingredients.map(itemData => (*/}
+                        {/*    <li className={`${styles.component} ml-4`} key={itemData.nanoId}>*/}
+                        {/*        <DragIcon type={"primary"}/>*/}
+                        {/*        <ConstructorElement*/}
+                        {/*            text={`${itemData.name}`}*/}
+                        {/*            thumbnail={itemData.image_mobile}*/}
+                        {/*            price={itemData.price}*/}
+                        {/*            handleClose={handleDelete(itemData)}*/}
+                        {/*        /></li>*/}
+                        {/*))}*/}
                     </div>
                 }
                 {bun &&
