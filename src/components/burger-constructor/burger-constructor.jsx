@@ -58,10 +58,15 @@ export default function BurgerConstructor() {
         accept: "default",
         collect: monitor => ({isHoverMain: monitor.isOver()}),
         drop: item => {
-            item.type === "bun"
-                ? dispatch(bunUpdated(item))
-                : dispatch(ingredientAdded(item))
-            dispatch(countIncremented(item))
+            if (item.type === "bun") {
+                if (!bun || (item._id !== bun._id)) {
+                    dispatch(bunUpdated(item))
+                    dispatch(countIncremented(item))
+                }
+            } else if (item.type !== "bun") {
+                dispatch(ingredientAdded(item))
+                dispatch(countIncremented(item))
+            }
         }
     })
 
