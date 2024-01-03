@@ -1,6 +1,6 @@
-import React, {useEffect, useRef} from "react";
+import React, {useCallback, useEffect, useRef} from "react";
 import {useSelector, useDispatch} from "react-redux";
-import {fetchIngredients} from "../../services/burger-ingredients-slice";
+import {activeTabSelected, fetchIngredients} from "../../services/burger-ingredients-slice";
 
 import styles from "./burger-ingredients.module.css"
 import Tabs from "./tabs/tabs"
@@ -23,16 +23,31 @@ export default function BurgerIngredients() {
         }
     }, [status, dispatch]);
 
-    const bunsTitleRef = useRef();
-    const saucesTitleRef = useRef();
-    const mainsTitleRef = useRef();
+    const refTitleBuns = useRef();
+    const refTitleSauces = useRef();
+    const refTitleMains = useRef();
 
-    const handleTabSelection = (e) => {
-        console.log(e.target.getBoundingClientRect().top)
+    const getBoundingDistance = ref => {
+        return Math.abs(ref.current?.getBoundingClientRect().top - 283)
     }
 
-    let content
+    const handleTabSelection = useCallback(() => {
 
+        const distances = {
+            "Булки": getBoundingDistance(refTitleBuns),
+            "Соусы": getBoundingDistance(refTitleSauces),
+            "Начинки": getBoundingDistance(refTitleMains)
+        }
+
+        const nearestTitle = Object.keys(distances)
+            .reduce((k, m) => distances[m] < distances[k] ? m : k)
+
+        dispatch(activeTabSelected(nearestTitle))
+
+    }, [])
+
+
+    let content
     if (status === "loading") {
         content =
             <p className={"text text_type_main-default pt-15 pb-30"}>Подождите, идет загрузка...</p>
@@ -43,26 +58,20 @@ export default function BurgerIngredients() {
         </>)
     } else if (status === "success") {
         content = (
-            <div>
+            <>
                 <IngredientsCategory
                     ingredients={ingredients.filter(item => item.type === "bun")}
-                    categoryName={"Булки"} className={"mt-10"}
-                    titleRef={bunsTitleRef}
-                    handleTabSelection={handleTabSelection}
+                    categoryName={"Булки"} className={"mt-10"} refTitle={refTitleBuns}
                 />
                 <IngredientsCategory
                     ingredients={ingredients.filter(item => item.type === "sauce")}
-                    categoryName={"Соусы"}
-                    titleRef={saucesTitleRef}
-                    handleTabSelection={handleTabSelection}
+                    categoryName={"Соусы"} refTitle={refTitleSauces}
                 />
                 <IngredientsCategory
                     ingredients={ingredients.filter(item => item.type === "main")}
-                    categoryName={"Начинки"}
-                    titleRef={mainsTitleRef}
-                    handleTabSelection={handleTabSelection}
+                    categoryName={"Начинки"} refTitle={refTitleMains}
                 />
-            </div>
+            </>
         )
     }
 
@@ -70,7 +79,10 @@ export default function BurgerIngredients() {
         <section className={styles.section}>
             <h1 className={"text text_type_main-large mt-10 mb-5"}>Соберите бургер</h1>
             <Tabs />
-            <div className={`${styles.ingredientsContainer}`}>{content}</div>
+            <div className={`${styles.ingredientsContainer}`}
+                 onScroll={() => handleTabSelection()}>
+                {content}
+            </div>
             {
                 modalIsOpen &&
                 <Modal title={"Детали ингрединета"}

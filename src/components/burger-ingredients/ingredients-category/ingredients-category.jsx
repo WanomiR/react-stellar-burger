@@ -7,13 +7,13 @@ import {ingredientPropType} from "../../../utils/prop-types"
 import Card from "../card/card";
 import {activeTabSelected} from "../../../services/burger-ingredients-slice";
 
-export default function IngredientsCategory({ingredients, categoryName, className, titleRef, handleTabSelection}) {
+export default function IngredientsCategory({ingredients, categoryName, className, refTitle}) {
 
     const dispatch = useDispatch();
 
     return (
         <>
-            <h2 className={`${className} text text_type_main-medium`} ref={titleRef} onScroll={handleTabSelection}>
+            <h2 className={`${className} text text_type_main-medium`} ref={refTitle}>
                 {categoryName}
             </h2>
             <ul className={`${styles.cards} mt-6 mb-10 pl-4`}>

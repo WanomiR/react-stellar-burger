@@ -29,7 +29,6 @@ const burgerConstructorSlice = createSlice({
                 .splice(indexTo, 0, state.ingredients.splice(indexFrom, 1)[0])
 
         }
-
     }
 })
 
