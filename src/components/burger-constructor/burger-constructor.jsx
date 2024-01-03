@@ -5,11 +5,7 @@ import {Button, ConstructorElement, CurrencyIcon} from "@ya.praktikum/react-deve
 
 import styles from "./burger-constructor.module.css"
 import {orderDetailsOpened, orderDetailsClosed, fetchOrderDetails} from "../../services/order-details-slice";
-import {
-    bunUpdated,
-    ingredientAdded,
-    ingredientMoved,
-} from "../../services/burger-constructor-slice";
+import {bunUpdated, ingredientAdded,} from "../../services/burger-constructor-slice";
 import {countIncremented} from "../../services/burger-ingredients-slice";
 import {DraggableElement} from "./draggable-element/draggable-element";
 import Modal from "../modal/modal";
@@ -60,17 +56,12 @@ export default function BurgerConstructor() {
         }
     })
 
-    const moveElement = useCallback((indexFrom, indexTo) => {
-        dispatch(ingredientMoved({indexFrom, indexTo}));
-    }, [ingredients])
-
     const renderElement = useCallback((item, index) => {
         return (
             <DraggableElement
                 key={item.nanoId}
                 itemData={item}
                 index={index}
-                moveElement={moveElement}
             />
         )
     }, [])

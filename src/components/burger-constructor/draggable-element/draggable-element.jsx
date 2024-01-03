@@ -4,11 +4,11 @@ import {useDrag, useDrop} from "react-dnd";
 
 import styles from "./draggable-element.module.css"
 import {ConstructorElement, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import {ingredientRemoved} from "../../../services/burger-constructor-slice";
+import {ingredientMoved, ingredientRemoved} from "../../../services/burger-constructor-slice";
 import {countDecremented} from "../../../services/burger-ingredients-slice";
 
 
-export const DraggableElement = ({itemData, index, moveElement}) => {
+export const DraggableElement = ({itemData, index}) => {
 
     const dispatch = useDispatch();
     const ref = useRef(null)
@@ -46,7 +46,7 @@ export const DraggableElement = ({itemData, index, moveElement}) => {
                 return
             }
             // Time to actually perform the action
-            moveElement(dragIndex, hoverIndex)
+            dispatch(ingredientMoved({indexFrom: dragIndex, indexTo: hoverIndex}));
             // Note: we're mutating the monitor item here!
             // Generally it's better to avoid mutations,
             // but it's good here for the sake of performance
