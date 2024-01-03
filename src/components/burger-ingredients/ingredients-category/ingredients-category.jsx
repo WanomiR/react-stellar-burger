@@ -1,15 +1,11 @@
-import React, {useEffect, useRef} from "react";
-import {useDispatch} from "react-redux";
+import React from "react";
 import PropTypes from "prop-types";
 
 import styles from "./ingredients-category.module.css"
 import {ingredientPropType} from "../../../utils/prop-types"
 import Card from "../card/card";
-import {activeTabSelected} from "../../../services/burger-ingredients-slice";
 
 export default function IngredientsCategory({ingredients, categoryName, className, refTitle}) {
-
-    const dispatch = useDispatch();
 
     return (
         <>

@@ -31,9 +31,6 @@ export const burgerIngredientsSlice = createSlice({
         countDecremented: (state, action) => {
             state.ingredients.find(item => item._id === action.payload._id).count--
         },
-        activeTabSelected: (state, action) => {
-            state.activeTab = action.payload
-        }
     },
     extraReducers: builder => {
        builder
@@ -57,7 +54,6 @@ export const burgerIngredientsSlice = createSlice({
 export const {
     countIncremented,
     countDecremented,
-    activeTabSelected
 } = burgerIngredientsSlice.actions;
 
 export default burgerIngredientsSlice.reducer;

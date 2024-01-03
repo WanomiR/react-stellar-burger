@@ -1,6 +1,6 @@
-import React, {useCallback, useEffect, useRef} from "react";
-import {useSelector, useDispatch} from "react-redux";
-import {activeTabSelected, fetchIngredients} from "../../services/burger-ingredients-slice";
+import React, { useEffect, useRef, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {fetchIngredients} from "../../services/burger-ingredients-slice";
 
 import styles from "./burger-ingredients.module.css"
 import Tabs from "./tabs/tabs"
@@ -17,6 +17,8 @@ export default function BurgerIngredients() {
 
     const modalIsOpen = useSelector(state => state.ingredientDetails.isOpen)
 
+    const [activeTab, setActiveTab] = useState("Булки");
+
     useEffect(() => {
         if (status === "idle") {
             dispatch(fetchIngredients())
@@ -31,7 +33,7 @@ export default function BurgerIngredients() {
         return Math.abs(ref.current?.getBoundingClientRect().top - 283)
     }
 
-    const handleTabSelection = useCallback(() => {
+    const handleActiveTab = () => {
 
         const distances = {
             "Булки": getBoundingDistance(refTitleBuns),
@@ -39,12 +41,11 @@ export default function BurgerIngredients() {
             "Начинки": getBoundingDistance(refTitleMains)
         }
 
-        const nearestTitle = Object.keys(distances)
+        const closestTitle = Object.keys(distances)
             .reduce((k, m) => distances[m] < distances[k] ? m : k)
 
-        dispatch(activeTabSelected(nearestTitle))
-
-    }, [])
+        setActiveTab(closestTitle)
+    }
 
 
     let content
@@ -78,9 +79,8 @@ export default function BurgerIngredients() {
     return (
         <section className={styles.section}>
             <h1 className={"text text_type_main-large mt-10 mb-5"}>Соберите бургер</h1>
-            <Tabs />
-            <div className={`${styles.ingredientsContainer}`}
-                 onScroll={() => handleTabSelection()}>
+            <Tabs activeTab={activeTab}/>
+            <div className={`${styles.ingredientsContainer}`} onScroll={() => handleActiveTab()}>
                 {content}
             </div>
             {

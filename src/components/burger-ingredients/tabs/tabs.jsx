@@ -3,9 +3,7 @@ import styles from "./tabs.module.css";
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useSelector} from "react-redux";
 
-export default function Tabs({titleRef}) {
-
-    const activeTab = useSelector(state => state.ingredients.activeTab);
+export default function Tabs({activeTab}) {
 
     return (
         <div className={`${styles.tabs}`}>
