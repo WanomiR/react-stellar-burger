@@ -1,8 +1,10 @@
 import {useState} from "react";
-import styles from "./navigation-item.module.css";
 import PropTypes from "prop-types";
 
+import styles from "./navigation-item.module.css";
+
 export default function NavigationItem({ Icon, itemName, className}) {
+
     const [isActive, setIsActive] = useState(false)
 
     const clickHandler = () => setIsActive(!isActive)

@@ -2,11 +2,12 @@ import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
 
 import {NORMA_API} from "../utils/constants";
 
+
 const initialState = {
     modalIsOpen: false,
     status: "idle",
     error: null,
-    name: '',
+    name: "",
     order: {},
     success: false,
 }
@@ -48,7 +49,7 @@ const orderDetailsSlice = createSlice({
                 Object.assign(state, {
                     status: "failed",
                     error: action.error.message,
-                    name: '',
+                    name: "",
                     order: {},
                     success: false,
                 })
@@ -56,9 +57,11 @@ const orderDetailsSlice = createSlice({
     }
 })
 
+
 export const {
     orderDetailsOpened,
     orderDetailsClosed
 } = orderDetailsSlice.actions;
+
 
 export default orderDetailsSlice.reducer;

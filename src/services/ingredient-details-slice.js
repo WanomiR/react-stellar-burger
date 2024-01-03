@@ -14,7 +14,7 @@ const ingredientDetailsSlice = createSlice({
             state.isOpen = true
             state.ingredientData = action.payload
         },
-        ingredientDetailsClosed: (state, action) => {
+        ingredientDetailsClosed: state => {
             state.isOpen = false
             state.ingredientData = {}
         },
@@ -24,10 +24,12 @@ const ingredientDetailsSlice = createSlice({
     }
 })
 
+
 export const {
     ingredientDetailsOpened,
     ingredientDetailsClosed,
     modalOpacitySet
 } = ingredientDetailsSlice.actions;
+
 
 export default ingredientDetailsSlice.reducer;

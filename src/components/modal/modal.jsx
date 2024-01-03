@@ -1,11 +1,12 @@
-import ModalOverlay from "./modal-overlay/modal-overlay";
 import {useEffect} from "react";
 import {createPortal} from "react-dom";
+import {useSelector} from "react-redux";
+import PropTypes from "prop-types";
+import {CloseIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 
 import styles from "./modal.module.css";
-import {CloseIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes from "prop-types";
-import {useSelector} from "react-redux";
+import ModalOverlay from "./modal-overlay/modal-overlay";
+
 
 const modalRoot = document.getElementById("root-modal");
 
@@ -28,7 +29,6 @@ export const Modal = ({children, title, handleModalClose}) => {
         // eslint-disable-next-line
     }, []);
 
-
     return createPortal((
         <div style={{opacity}}>
             <ModalOverlay handleModalClose={handleModalClose}/>
@@ -43,10 +43,12 @@ export const Modal = ({children, title, handleModalClose}) => {
     ), modalRoot)
 }
 
-Modal.propTypes = {
-    title: PropTypes.string,
-    children: PropTypes.any,
-    handleModalClose: PropTypes.func,
-}
 
 export default Modal;
+
+
+Modal.propTypes = {
+    children: PropTypes.any,
+    title: PropTypes.string,
+    handleModalClose: PropTypes.func,
+}

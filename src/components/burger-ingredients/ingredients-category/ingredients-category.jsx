@@ -23,4 +23,8 @@ IngredientsCategory.propTypes = {
     ingredients: PropTypes.arrayOf(ingredientPropType.isRequired).isRequired,
     categoryName: PropTypes.string.isRequired,
     className: PropTypes.string,
+    refTitle: PropTypes.oneOfType([
+        PropTypes.func,
+        PropTypes.shape({ current: PropTypes.instanceOf(Element)})
+    ]).isRequired,
 };

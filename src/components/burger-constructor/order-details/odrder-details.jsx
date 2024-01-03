@@ -1,7 +1,8 @@
-import {useSelector} from "react-redux";
-import styles from "./order-details.module.css"
-import doneIcon from "../../../assets/images/done.svg"
 import React from "react";
+import {useSelector} from "react-redux";
+import doneIcon from "../../../assets/images/done.svg"
+
+import styles from "./order-details.module.css"
 
 export default function OrderDetails() {
 

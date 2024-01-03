@@ -1,11 +1,12 @@
 import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
+
 import {NORMA_API} from "../utils/constants";
+
 
 const initialState = {
     ingredients: [],
     status: "idle",
     error: null,
-    activeTab: "Булки"
 }
 
 export const fetchIngredients = createAsyncThunk("ingredients/fetchIngredients", async () => {
@@ -51,9 +52,11 @@ export const burgerIngredientsSlice = createSlice({
     }
 });
 
+
 export const {
     countIncremented,
     countDecremented,
 } = burgerIngredientsSlice.actions;
+
 
 export default burgerIngredientsSlice.reducer;

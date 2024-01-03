@@ -17,17 +17,18 @@ export default function BurgerIngredients() {
 
     const modalIsOpen = useSelector(state => state.ingredientDetails.isOpen)
 
-    const [activeTab, setActiveTab] = useState("Булки");
+    const [activeTab, setActiveTab] = useState("buns");
+
+    const refTitleBuns = useRef();
+    const refTitleSauces = useRef();
+    const refTitleMains = useRef();
+
 
     useEffect(() => {
         if (status === "idle") {
             dispatch(fetchIngredients())
         }
     }, [status, dispatch]);
-
-    const refTitleBuns = useRef();
-    const refTitleSauces = useRef();
-    const refTitleMains = useRef();
 
     const getBoundingDistance = ref => {
         return Math.abs(ref.current?.getBoundingClientRect().top - 283)
@@ -36,9 +37,9 @@ export default function BurgerIngredients() {
     const handleActiveTab = () => {
 
         const distances = {
-            "Булки": getBoundingDistance(refTitleBuns),
-            "Соусы": getBoundingDistance(refTitleSauces),
-            "Начинки": getBoundingDistance(refTitleMains)
+            "buns": getBoundingDistance(refTitleBuns),
+            "sauces": getBoundingDistance(refTitleSauces),
+            "mains": getBoundingDistance(refTitleMains)
         }
 
         const closestTitle = Object.keys(distances)
@@ -46,7 +47,6 @@ export default function BurgerIngredients() {
 
         setActiveTab(closestTitle)
     }
-
 
     let content
     if (status === "loading") {

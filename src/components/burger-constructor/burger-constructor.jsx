@@ -4,12 +4,14 @@ import {useDrop} from "react-dnd";
 import {Button, ConstructorElement, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components"
 
 import styles from "./burger-constructor.module.css"
-import {orderDetailsOpened, orderDetailsClosed, fetchOrderDetails} from "../../services/order-details-slice";
+import Modal from "../modal/modal";
+import OrderDetails from "./order-details/odrder-details";
+import {
+    orderDetailsOpened, orderDetailsClosed, fetchOrderDetails
+} from "../../services/order-details-slice";
 import {bunUpdated, ingredientAdded,} from "../../services/burger-constructor-slice";
 import {countIncremented} from "../../services/burger-ingredients-slice";
 import {DraggableElement} from "./draggable-element/draggable-element";
-import Modal from "../modal/modal";
-import OrderDetails from "./order-details/odrder-details";
 
 
 export default function BurgerConstructor() {
@@ -18,9 +20,10 @@ export default function BurgerConstructor() {
     const {bun, ingredients} = useSelector(state => state.burgerConstructor);
     const {modalIsOpen} = useSelector(state => state.orderDetails);
 
+    const isBun = !!bun;
+    const areIngredients = ingredients.length > 0;
+
     const totalPrice = useMemo(() => {
-        const isBun = !!bun;
-        const areIngredients = ingredients.length > 0;
 
         return isBun ?  // is there a bun?
             areIngredients ?  // are there any ingredients ?
@@ -32,7 +35,7 @@ export default function BurgerConstructor() {
     }, [bun, ingredients])
 
     const handleOpenDetails = () => {
-        if (!!bun && ingredients.length > 0) {
+        if (isBun && areIngredients) {
             dispatch(fetchOrderDetails(
                 // stack all ingredients between two buns
                 Array(bun._id).concat(ingredients.map(item => item._id)).concat(bun._id)
@@ -46,7 +49,7 @@ export default function BurgerConstructor() {
         collect: monitor => ({isHover: monitor.isOver()}),
         drop: item => {
             if ((item.type === "bun")
-                && (!bun || (item._id !== bun._id))) {
+                && (!isBun || (item._id !== bun._id))) {
                 dispatch(bunUpdated(item))
                 dispatch(countIncremented(item))
             } else if (item.type !== "bun") {
@@ -78,7 +81,7 @@ export default function BurgerConstructor() {
         <section className={`${styles.section} ml-10 mt-20`} ref={dropRef}
         >
             <ul className={`${styles.componentsList}`} style={{...borderStyle}}>
-                {bun &&
+                {isBun &&
                     <li className={"ml-4 pl-8"}><ConstructorElement
                         text={`${bun.name} (верх)`}
                         thumbnail={bun.image_mobile}
@@ -87,12 +90,12 @@ export default function BurgerConstructor() {
                         type={"top"}
                     /></li>
                 }
-                {ingredients &&
+                {areIngredients &&
                     <div className={styles.unlockedComponents}>
                         {ingredients.map((item, i) => renderElement(item, i))}
                     </div>
                 }
-                {bun &&
+                {isBun &&
                     <li className={"pl-8 ml-4 mb-5"}><ConstructorElement
                         text={`${bun.name} (низ)`}
                         thumbnail={bun.image_mobile}
