@@ -44,7 +44,8 @@ export default function BurgerConstructor() {
     const handleOpenDetails = () => {
         if (!!bun && ingredients.length > 0) {
             dispatch(fetchOrderDetails(
-                ingredients.map(item => item._id).concat(bun._id)
+                // stack all ingredients between two buns
+                Array(bun._id).concat(ingredients.map(item => item._id)).concat(bun._id)
             ))
             dispatch(orderDetailsOpened())
         }

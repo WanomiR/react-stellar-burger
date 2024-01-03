@@ -18,10 +18,12 @@ export const burgerIngredientsSlice = createSlice({
     initialState,
     reducers: {
         countIncremented: (state, action) => {
-            state.ingredients.find(item => item._id === action.payload._id).count++
-            // reset count for the other bun
-            if (action.payload.type === "bun") {
-                state.ingredients
+            const ingredient = state.ingredients.find(item => item._id === action.payload._id)
+            ingredient.count++
+
+            if (ingredient.type === "bun") {
+                ingredient.count++  // add second bun
+                state.ingredients   // reset count for the other bun
                     .find(item => item.type === "bun" && item._id !== action.payload._id)
                     .count = 0
             }
