@@ -7,25 +7,16 @@ import {ingredientPropType} from "../../../utils/prop-types"
 import Card from "../card/card";
 import {activeTabSelected} from "../../../services/burger-ingredients-slice";
 
-export default function IngredientsCategory({ingredients, categoryName, className}) {
+export default function IngredientsCategory({ingredients, categoryName, className, titleRef, handleTabSelection}) {
 
     const dispatch = useDispatch();
-    const ref = useRef();
-
-    useEffect(() => {
-        const observer = new IntersectionObserver(([entry]) => {
-                if (entry.isIntersecting) {
-                    dispatch(activeTabSelected(categoryName))
-                }
-            }
-        );
-        observer.observe(ref.current);
-    }, [ref])
 
     return (
         <>
-            <h2 className={`${className} text text_type_main-medium`}>{categoryName}</h2>
-            <ul className={`${styles.cards} mt-6 mb-10 pl-4`} ref={ref}>
+            <h2 className={`${className} text text_type_main-medium`} ref={titleRef} onScroll={handleTabSelection}>
+                {categoryName}
+            </h2>
+            <ul className={`${styles.cards} mt-6 mb-10 pl-4`}>
                 {ingredients.map(itemData => (<Card ingredientData={itemData} key={itemData._id}/>))}
             </ul>
         </>

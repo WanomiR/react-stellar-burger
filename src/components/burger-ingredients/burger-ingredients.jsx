@@ -23,7 +23,13 @@ export default function BurgerIngredients() {
         }
     }, [status, dispatch]);
 
+    const bunsTitleRef = useRef();
+    const saucesTitleRef = useRef();
+    const mainsTitleRef = useRef();
 
+    const handleTabSelection = (e) => {
+        console.log(e.target.getBoundingClientRect().top)
+    }
 
     let content
 
@@ -37,20 +43,26 @@ export default function BurgerIngredients() {
         </>)
     } else if (status === "success") {
         content = (
-            <>
+            <div>
                 <IngredientsCategory
                     ingredients={ingredients.filter(item => item.type === "bun")}
                     categoryName={"Булки"} className={"mt-10"}
+                    titleRef={bunsTitleRef}
+                    handleTabSelection={handleTabSelection}
                 />
                 <IngredientsCategory
                     ingredients={ingredients.filter(item => item.type === "sauce")}
                     categoryName={"Соусы"}
+                    titleRef={saucesTitleRef}
+                    handleTabSelection={handleTabSelection}
                 />
                 <IngredientsCategory
                     ingredients={ingredients.filter(item => item.type === "main")}
                     categoryName={"Начинки"}
+                    titleRef={mainsTitleRef}
+                    handleTabSelection={handleTabSelection}
                 />
-            </>
+            </div>
         )
     }
 

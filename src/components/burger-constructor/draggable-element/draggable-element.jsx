@@ -13,13 +13,8 @@ export const DraggableElement = ({itemData, index, moveElement}) => {
     const dispatch = useDispatch();
     const ref = useRef(null)
 
-    const [{handlerId}, drop] = useDrop({
+    const [, drop] = useDrop({
         accept: "any",
-        collect(monitor) {
-            return {
-                handlerId: monitor.getHandlerId(),
-            }
-        },
         hover(item, monitor) {
             if (!ref.current) {
                 return
@@ -79,8 +74,7 @@ export const DraggableElement = ({itemData, index, moveElement}) => {
     }
 
     return (
-        <li className={`${styles.component} ml-4`} style={{opacity}}
-            data-handler-id={handlerId} ref={ref}>
+        <li className={`${styles.component} ml-4`} style={{opacity}} ref={ref}>
             <DragIcon type={"primary"}/>
             <ConstructorElement
                 text={`${itemData.name}`}
