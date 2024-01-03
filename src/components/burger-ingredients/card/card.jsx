@@ -4,8 +4,8 @@ import {useDrag} from "react-dnd";
 
 import styles from "./card.module.css";
 import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import {ingredientPropType} from "../../utils/prop-types"
-import {ingredientDetailsOpened, modalOpacitySet} from "../../services/ingredientDetailsSlice";
+import {ingredientPropType} from "../../../utils/prop-types"
+import {ingredientDetailsOpened, modalOpacitySet} from "../../../services/ingredient-details-slice";
 
 export default function Card({ingredientData}) {
     const dispatch = useDispatch();

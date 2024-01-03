@@ -4,12 +4,12 @@ import {useDrop} from "react-dnd";
 import {Button, ConstructorElement, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components"
 
 import styles from "./burger-constructor.module.css"
-import {orderDetailsOpened, orderDetailsClosed, fetchOrderDetails} from "../../services/orderDetailsSlice";
-import {bunUpdated, ingredientAdded, ingredientsReordered} from "../../services/burgerConstructorSlice";
-import {countIncremented} from "../../services/ingredientsSlice";
-import {DraggableElement} from "../draggable-element/draggable-element";
+import {orderDetailsOpened, orderDetailsClosed, fetchOrderDetails} from "../../services/order-details-slice";
+import {bunUpdated, ingredientAdded, ingredientsReordered} from "../../services/burger-constructor-slice";
+import {countIncremented} from "../../services/burger-ingredients-slice";
+import {DraggableElement} from "./draggable-element/draggable-element";
 import Modal from "../modal/modal";
-import OrderDetails from "../order-details/odrder-details";
+import OrderDetails from "./order-details/odrder-details";
 
 
 export default function BurgerConstructor() {
@@ -54,11 +54,10 @@ export default function BurgerConstructor() {
         accept: "ingredient",
         collect: monitor => ({isHover: monitor.isOver()}),
         drop: item => {
-            if (item.type === "bun") {
-                if (!bun || (item._id !== bun._id)) {
-                    dispatch(bunUpdated(item))
-                    dispatch(countIncremented(item))
-                }
+            if ((item.type === "bun")
+                && (!bun || (item._id !== bun._id))) {
+                dispatch(bunUpdated(item))
+                dispatch(countIncremented(item))
             } else if (item.type !== "bun") {
                 dispatch(ingredientAdded(item))
                 dispatch(countIncremented(item))
@@ -96,7 +95,7 @@ export default function BurgerConstructor() {
     return (
         <section className={`${styles.section} ml-10 mt-20`} ref={dropRef}
         >
-            <ul className={`${styles.componentsList} mb-5`} style={{...borderStyle}}>
+            <ul className={`${styles.componentsList}`} style={{...borderStyle}}>
                 {bun &&
                     <li className={"ml-4 pl-8"}><ConstructorElement
                         text={`${bun.name} (верх)`}
@@ -112,7 +111,7 @@ export default function BurgerConstructor() {
                     </div>
                 }
                 {bun &&
-                    <li className={"pl-8 ml-4"}><ConstructorElement
+                    <li className={"pl-8 ml-4 mb-5"}><ConstructorElement
                         text={`${bun.name} (низ)`}
                         thumbnail={bun.image_mobile}
                         price={bun.price}

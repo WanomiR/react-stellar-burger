@@ -17,7 +17,7 @@ export const fetchIngredients = createAsyncThunk("ingredients/fetchIngredients",
     return res.json()
 })
 
-export const ingredientsSlice = createSlice({
+export const burgerIngredientsSlice = createSlice({
     name: "ingredients",
     initialState,
     reducers: {
@@ -49,6 +49,7 @@ export const ingredientsSlice = createSlice({
            })
            .addCase(fetchIngredients.rejected, (state, action) => {
                state.status = "failed"
+               state.ingredients = []
                state.error = action.error.message
            })
     }
@@ -58,6 +59,6 @@ export const {
     countIncremented,
     countDecremented,
     activeTabSelected
-} = ingredientsSlice.actions;
+} = burgerIngredientsSlice.actions;
 
-export default ingredientsSlice.reducer;
+export default burgerIngredientsSlice.reducer;

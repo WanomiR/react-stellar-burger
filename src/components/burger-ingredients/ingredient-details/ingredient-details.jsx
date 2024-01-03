@@ -1,6 +1,6 @@
 import styles from "./ingredient-details.module.css"
 import {useSelector, useDispatch} from "react-redux";
-import {modalOpacitySet} from "../../services/ingredientDetailsSlice";
+import {modalOpacitySet} from "../../../services/ingredient-details-slice";
 
 export default function IngredientDetails() {
     const dispatch = useDispatch();

@@ -2,10 +2,10 @@ import {useRef} from "react";
 import {useDispatch} from "react-redux";
 import {useDrag, useDrop} from "react-dnd";
 
-import styles from "../dnd-mockup/dnd-mockup.module.css";
+import styles from "./draggable-element.module.css"
 import {ConstructorElement, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import {ingredientRemoved} from "../../services/burgerConstructorSlice";
-import {countDecremented} from "../../services/ingredientsSlice";
+import {ingredientRemoved} from "../../../services/burger-constructor-slice";
+import {countDecremented} from "../../../services/burger-ingredients-slice";
 
 
 export const DraggableElement = ({itemData, index, moveElement}) => {

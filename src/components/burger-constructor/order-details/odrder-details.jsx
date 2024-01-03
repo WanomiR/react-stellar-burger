@@ -1,6 +1,6 @@
 import {useSelector} from "react-redux";
 import styles from "./order-details.module.css"
-import doneIcon from "../../assets/images/done.svg"
+import doneIcon from "../../../assets/images/done.svg"
 import React from "react";
 
 export default function OrderDetails() {
@@ -25,10 +25,9 @@ export default function OrderDetails() {
             <p className={"text text_type_main-default pb-2"}>Ваш заказ начали готовить</p>
             <p className={
                 `text text_type_main-default text_color_inactive pb-30 ${styles.additionalText}`
-            }>{name}</p>
+            }>Дождитесь готовности на орбитальной станции</p>
         </>)
     }
-
     return (<>{content}</>)
 }
 

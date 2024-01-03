@@ -1,8 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
-import ingredientsReducer from "./ingredientsSlice"
-import constructorReducer from "./burgerConstructorSlice";
-import ingredientDetailsReducer from "./ingredientDetailsSlice";
-import orderDetailsReducer from "./orderDetailsSlice";
+import ingredientsReducer from "./burger-ingredients-slice"
+import constructorReducer from "./burger-constructor-slice";
+import ingredientDetailsReducer from "./ingredient-details-slice";
+import orderDetailsReducer from "./order-details-slice";
 
 export default configureStore({
     reducer: {

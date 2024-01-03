@@ -5,7 +5,6 @@ import {HTML5Backend} from "react-dnd-html5-backend";
 import AppHeader from "../header/header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
-import {DndMockup} from "../dnd-mockup/dnd-mockup";
 
 function App() {
 
@@ -15,7 +14,6 @@ function App() {
             <DndProvider backend={HTML5Backend}>
                 <main className={styles.main}>
                     <BurgerIngredients/>
-                    {/*<DndMockup />*/}
                     <BurgerConstructor/>
                 </main>
             </DndProvider>

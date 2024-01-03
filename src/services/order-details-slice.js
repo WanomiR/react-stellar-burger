@@ -6,6 +6,9 @@ const initialState = {
     modalIsOpen: false,
     status: "idle",
     error: null,
+    name: '',
+    order: {},
+    success: false,
 }
 
 export const fetchOrderDetails =
@@ -42,8 +45,13 @@ const orderDetailsSlice = createSlice({
                 Object.assign(state, action.payload);
             })
             .addCase(fetchOrderDetails.rejected, (state, action) => {
-                state.status = "failed"
-                state.error = action.error.message
+                Object.assign(state, {
+                    status: "failed",
+                    error: action.error.message,
+                    name: '',
+                    order: {},
+                    success: false,
+                })
             })
     }
 })

@@ -1,4 +1,4 @@
-import ModalOverlay from "../modal-overlay/modal-overlay";
+import ModalOverlay from "./modal-overlay/modal-overlay";
 import {useEffect} from "react";
 import {createPortal} from "react-dom";
 
