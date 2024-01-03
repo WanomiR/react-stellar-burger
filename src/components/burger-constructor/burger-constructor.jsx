@@ -5,7 +5,11 @@ import {Button, ConstructorElement, CurrencyIcon} from "@ya.praktikum/react-deve
 
 import styles from "./burger-constructor.module.css"
 import {orderDetailsOpened, orderDetailsClosed, fetchOrderDetails} from "../../services/order-details-slice";
-import {bunUpdated, ingredientAdded, ingredientsReordered} from "../../services/burger-constructor-slice";
+import {
+    bunUpdated,
+    ingredientAdded,
+    ingredientMoved,
+} from "../../services/burger-constructor-slice";
 import {countIncremented} from "../../services/burger-ingredients-slice";
 import {DraggableElement} from "./draggable-element/draggable-element";
 import Modal from "../modal/modal";
@@ -17,16 +21,6 @@ export default function BurgerConstructor() {
 
     const {bun, ingredients} = useSelector(state => state.burgerConstructor);
     const {modalIsOpen} = useSelector(state => state.orderDetails);
-
-    const [items, setItems] = useState(ingredients)
-
-    useEffect(() => {
-        dispatch(ingredientsReordered(items))
-    }, [items]);
-
-    useEffect(() => {
-        setItems(ingredients)
-    }, [ingredients]);
 
     const totalPrice = useMemo(() => {
         const isBun = !!bun;
@@ -67,11 +61,7 @@ export default function BurgerConstructor() {
     })
 
     const moveElement = useCallback((indexFrom, indexTo) => {
-        setItems((prevCards) => (
-            prevCards
-                .toSpliced(indexFrom, 1)
-                .toSpliced(indexTo, 0, prevCards[indexFrom])
-        ))
+        dispatch(ingredientMoved({indexFrom, indexTo}));
     }, [ingredients])
 
     const renderElement = useCallback((item, index) => {
@@ -106,9 +96,9 @@ export default function BurgerConstructor() {
                         type={"top"}
                     /></li>
                 }
-                {items &&
+                {ingredients &&
                     <div className={styles.unlockedComponents}>
-                        {items.map((item, i) => renderElement(item, i))}
+                        {ingredients.map((item, i) => renderElement(item, i))}
                     </div>
                 }
                 {bun &&

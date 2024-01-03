@@ -23,8 +23,11 @@ const burgerConstructorSlice = createSlice({
         ingredientRemoved: (state, action) => {
             state.ingredients = state.ingredients.filter(item => item.nanoId !== action.payload.nanoId)
         },
-        ingredientsReordered: (state, action) => {
-            state.ingredients = action.payload
+        ingredientMoved: (state, action) => {
+            const {indexFrom, indexTo} = action.payload
+            state.ingredients
+                .splice(indexTo, 0, state.ingredients.splice(indexFrom, 1)[0])
+
         }
 
     }
@@ -34,7 +37,7 @@ export const {
     bunUpdated,
     ingredientAdded,
     ingredientRemoved,
-    ingredientsReordered
+    ingredientMoved
 } = burgerConstructorSlice.actions;
 
 export default burgerConstructorSlice.reducer;
