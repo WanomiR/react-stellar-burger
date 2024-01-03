@@ -1,8 +1,4 @@
-import {
-    createSlice,
-    createAsyncThunk,
-    nanoid
-} from "@reduxjs/toolkit";
+import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
 import {NORMA_API} from "../utils/constants";
 
 const initialState = {
@@ -23,6 +19,7 @@ export const burgerIngredientsSlice = createSlice({
     reducers: {
         countIncremented: (state, action) => {
             state.ingredients.find(item => item._id === action.payload._id).count++
+            // reset count for the other bun
             if (action.payload.type === "bun") {
                 state.ingredients
                     .find(item => item.type === "bun" && item._id !== action.payload._id)

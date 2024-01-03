@@ -65,11 +65,11 @@ export default function BurgerConstructor() {
         }
     })
 
-    const moveElement = useCallback((dragIndex, hoverIndex) => {
+    const moveElement = useCallback((indexFrom, indexTo) => {
         setItems((prevCards) => (
             prevCards
-                .toSpliced(dragIndex, 1)
-                .toSpliced(hoverIndex, 0, prevCards[dragIndex])
+                .toSpliced(indexFrom, 1)
+                .toSpliced(indexTo, 0, prevCards[indexFrom])
         ))
     }, [ingredients])
 
