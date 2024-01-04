@@ -45,7 +45,9 @@ export default function BurgerIngredients() {
         const closestTitle = Object.keys(distances)
             .reduce((k, m) => distances[m] < distances[k] ? m : k)
 
-        setActiveTab(closestTitle)
+        if (activeTab !== closestTitle) {
+            setActiveTab(closestTitle)
+        }
     }
 
     let content
