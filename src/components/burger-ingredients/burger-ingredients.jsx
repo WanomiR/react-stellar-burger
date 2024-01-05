@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchIngredients} from "../../services/burger-ingredients-slice";
 
@@ -14,41 +14,15 @@ export default function BurgerIngredients() {
 
     const dispatch = useDispatch();
     const {ingredients, status, error} = useSelector(state => state.ingredients)
+    const activeTab = useSelector(state => state.ingredients.activeTab)
 
     const modalIsOpen = useSelector(state => state.ingredientDetails.isOpen)
-
-    const [activeTab, setActiveTab] = useState("buns");
-
-    const refTitleBuns = useRef();
-    const refTitleSauces = useRef();
-    const refTitleMains = useRef();
-
 
     useEffect(() => {
         if (status === "idle") {
             dispatch(fetchIngredients())
         }
     }, [status, dispatch]);
-
-    const getBoundingDistance = ref => {
-        return Math.abs(ref.current?.getBoundingClientRect().top - 283)
-    }
-
-    const handleActiveTab = () => {
-
-        const distances = {
-            "buns": getBoundingDistance(refTitleBuns),
-            "sauces": getBoundingDistance(refTitleSauces),
-            "mains": getBoundingDistance(refTitleMains)
-        }
-
-        const closestTitle = Object.keys(distances)
-            .reduce((k, m) => distances[m] < distances[k] ? m : k)
-
-        if (activeTab !== closestTitle) {
-            setActiveTab(closestTitle)
-        }
-    }
 
     let content
     if (status === "loading") {
@@ -64,25 +38,25 @@ export default function BurgerIngredients() {
             <>
                 <IngredientsCategory
                     ingredients={ingredients.filter(item => item.type === "bun")}
-                    categoryName={"Булки"} className={"mt-10"} refTitle={refTitleBuns}
+                    categoryName={"Булки"} className={"mt-10"}
                 />
                 <IngredientsCategory
                     ingredients={ingredients.filter(item => item.type === "sauce")}
-                    categoryName={"Соусы"} refTitle={refTitleSauces}
+                    categoryName={"Соусы"}
                 />
                 <IngredientsCategory
                     ingredients={ingredients.filter(item => item.type === "main")}
-                    categoryName={"Начинки"} refTitle={refTitleMains}
+                    categoryName={"Начинки"}
                 />
             </>
         )
     }
 
     return (
-        <section className={styles.section}>
+        <section className={styles.section} id={"burgerIngredients"}>
             <h1 className={"text text_type_main-large mt-10 mb-5"}>Соберите бургер</h1>
             <Tabs activeTab={activeTab}/>
-            <div className={`${styles.ingredientsContainer}`} onScroll={() => handleActiveTab()}>
+            <div className={`${styles.ingredientsContainer}`}>
                 {content}
             </div>
             {

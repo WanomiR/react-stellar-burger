@@ -8,13 +8,13 @@ export default function Tabs({activeTab}) {
 
     return (
         <div className={`${styles.tabs}`}>
-            <Tab value="Булки" active={activeTab === "buns"} onClick={() => {}}>
+            <Tab value="Булки" active={activeTab === "Булки"} onClick={() => {}}>
                 Булки
             </Tab>
-            <Tab value="Соусы" active={activeTab === "sauces"} onClick={() => {}}>
+            <Tab value="Соусы" active={activeTab === "Соусы"} onClick={() => {}}>
                 Соусы
             </Tab>
-            <Tab value="Начинки" active={activeTab === "mains"} onClick={() => {}}>
+            <Tab value="Начинки" active={activeTab === "Начинки"} onClick={() => {}}>
                 Начинки
             </Tab>
         </div>
