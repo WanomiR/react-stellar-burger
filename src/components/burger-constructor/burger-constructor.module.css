@@ -12,6 +12,14 @@
     height: max(calc(100vh - 415px), 390px);
 }
 
+.componentsListBorderActive {
+    border-radius: 2rem;
+    box-shadow:
+            0 4px 32px 0 rgba(101, 101, 255, 0.25),
+            0 0 8px 8px rgba(101, 101, 255, 0.125),
+            0 0 16px 8px rgba(101, 101, 255, 0.125)
+}
+
 .unlockedComponents {
     display: flex;
     flex-direction: column;

@@ -25,13 +25,18 @@ export default function BurgerConstructor() {
 
     const totalPrice = useMemo(() => {
 
-        return isBun ?  // is there a bun?
-            areIngredients ?  // are there any ingredients ?
-                ingredients.reduce((acc, item) => acc += item.price, 0) + bun.price * 2  // calculate the total if so
-                : bun.price * 2  // otherwise it is just the price for two buns
-            : areIngredients ?  // there is no bun, are there any ingredients ?
-                ingredients.reduce((acc, item) => acc += item.price, 0)  // calculate the total if so
-                : 0  // otherwise return zero
+        let total;
+        if (isBun && areIngredients) {
+            total = ingredients.reduce((acc, {price}) => acc + price, 0) + bun.price * 2;
+        } else if (isBun && !areIngredients) {
+            total = bun.price * 2;
+        } else if (!isBun && areIngredients) {
+            total = ingredients.reduce((acc, {price}) => acc + price, 0)
+        } else {
+            total = 0;
+        }
+
+        return total
     }, [bun, ingredients])
 
     const handleOpenDetails = () => {
@@ -59,28 +64,22 @@ export default function BurgerConstructor() {
         }
     })
 
-    const renderElement = useCallback((item, index) => {
-        return (
-            <DraggableElement
-                key={item.nanoId}
-                itemData={item}
-                index={index}
-            />
-        )
-    }, [])
+    const renderElement = (item, index) => (
+        <DraggableElement
+            key={item.nanoId}
+            itemData={item}
+            index={index}
+        />
+    )
 
-    let borderStyle
-    isHover
-        ? borderStyle = {
-            borderRadius: "2rem",
-            boxShadow: "0px 4px 32px 0px rgba(101, 101, 255, 0.25), 0px 0px 8px 8px rgba(101, 101, 255, 0.125), 0px 0px 16px 8px rgba(101, 101, 255, 0.125)"
-        }
-        : borderStyle = { border: "none" }
+    const borderStyle = isHover ? styles.componentsListBorderActive : ""
 
     return (
-        <section className={`${styles.section} ml-10 mt-20`} ref={dropRef}
+        <section
+            className={`${styles.section} ml-10 mt-20`}
+            ref={dropRef}
         >
-            <ul className={`${styles.componentsList}`} style={{...borderStyle}}>
+            <ul className={`${styles.componentsList} ${borderStyle}`}>
                 {isBun &&
                     <li className={"ml-4 pl-8"}><ConstructorElement
                         text={`${bun.name} (верх)`}
@@ -92,7 +91,7 @@ export default function BurgerConstructor() {
                 }
                 {areIngredients &&
                     <div className={styles.unlockedComponents}>
-                        {ingredients.map((item, i) => renderElement(item, i))}
+                        {ingredients.map(renderElement)}
                     </div>
                 }
                 {isBun &&
