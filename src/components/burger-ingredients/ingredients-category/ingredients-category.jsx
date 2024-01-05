@@ -12,10 +12,10 @@ export default function IngredientsCategory({ingredients, categoryName, classNam
 
     const dispatch = useDispatch();
 
-    const {ref, inView, entry} = useInView({
+    const {ref} = useInView({
         root: document.querySelector("#burgerIngredients"),
         threshold: 1,
-        onChange: (inView, entry) => {
+        onChange: inView => {
             if (inView) dispatch(activeTabSet(categoryName));
         }
     })
