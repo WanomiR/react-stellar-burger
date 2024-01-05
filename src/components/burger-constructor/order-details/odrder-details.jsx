@@ -3,21 +3,18 @@ import {useSelector} from "react-redux";
 import doneIcon from "../../../assets/images/done.svg"
 
 import styles from "./order-details.module.css"
+import {Fallback} from "../../fallback/Fallback";
 
 export default function OrderDetails() {
 
-    const {status, error, success, name, order} = useSelector(state => state.orderDetails)
+    const {status, success, error, order} = useSelector(state => state.orderDetails)
 
-    let content
-    if (status === "loading") {
-        content = <p className={"text text_type_main-default pt-15 pb-30"}>Подождите, идет загрузка...</p>
-    } else if (status === "failed") {
-        content = (<>
-            <p className={"text text_type_main-default pt-15 pb-2"}>Произошла ошибка:</p>
-            <p className={"text text_type_main-default text_color_inactive pb-30"}>{error}</p>
-        </>)
-    } else if ((status === "success") && success) {
-        content = (<>
+    return (
+        <Fallback
+            isLoading={status === "loading"}
+            isSuccess={(status === "success") && success}
+            error={error}
+        >
             <h2 className={`${styles.orderNumber} text text_type_digits-large pt-15 pb-8`}>
                 {order.number}
             </h2>
@@ -27,8 +24,7 @@ export default function OrderDetails() {
             <p className={
                 `text text_type_main-default text_color_inactive pb-30 ${styles.additionalText}`
             }>Дождитесь готовности на орбитальной станции</p>
-        </>)
-    }
-    return (<>{content}</>)
+        </Fallback>
+    )
 }
 

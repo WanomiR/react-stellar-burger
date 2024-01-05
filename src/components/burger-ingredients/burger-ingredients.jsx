@@ -8,6 +8,7 @@ import IngredientsCategory from "./ingredients-category/ingredients-category";
 import Modal from "../modal/modal";
 import IngredientDetails from "./ingredient-details/ingredient-details";
 import {ingredientDetailsClosed} from "../../services/ingredient-details-slice";
+import {Fallback} from "../fallback/Fallback";
 
 
 export default function BurgerIngredients() {
@@ -24,40 +25,29 @@ export default function BurgerIngredients() {
         }
     }, [status, dispatch]);
 
-    let content
-    if (status === "loading") {
-        content =
-            <p className={"text text_type_main-default pt-15 pb-30"}>Подождите, идет загрузка...</p>
-    } else if (status === "failed") {
-        content = (<>
-            <p className={"text text_type_main-default pt-15 pb-2"}>Произошла ошибка:</p>
-            <p className={"text text_type_main-default text_color_inactive pb-30"}>{error}</p>
-        </>)
-    } else if (status === "success") {
-        content = (
-            <>
-                <IngredientsCategory
-                    ingredients={ingredients.filter(item => item.type === "bun")}
-                    categoryName={"Булки"} className={"mt-10"}
-                />
-                <IngredientsCategory
-                    ingredients={ingredients.filter(item => item.type === "sauce")}
-                    categoryName={"Соусы"}
-                />
-                <IngredientsCategory
-                    ingredients={ingredients.filter(item => item.type === "main")}
-                    categoryName={"Начинки"}
-                />
-            </>
-        )
-    }
-
     return (
         <section className={styles.section} id={"burgerIngredients"}>
             <h1 className={"text text_type_main-large mt-10 mb-5"}>Соберите бургер</h1>
             <Tabs activeTab={activeTab}/>
             <div className={`${styles.ingredientsContainer}`}>
-                {content}
+                <Fallback
+                    isLoading={status === "loading"}
+                    isSuccess={status === "success"}
+                    error={error}
+                >
+                    <IngredientsCategory
+                        ingredients={ingredients.filter(item => item.type === "bun")}
+                        categoryName={"Булки"} className={"mt-10"}
+                    />
+                    <IngredientsCategory
+                        ingredients={ingredients.filter(item => item.type === "sauce")}
+                        categoryName={"Соусы"}
+                    />
+                    <IngredientsCategory
+                        ingredients={ingredients.filter(item => item.type === "main")}
+                        categoryName={"Начинки"}
+                    />
+                </Fallback>
             </div>
             {
                 modalIsOpen &&

@@ -38,7 +38,7 @@ export default function Card({ingredientData}) {
                 </div>
                 <p className={`${styles.name} text text_type_main-default`}>{ingredientData.name}</p>
                 {!!ingredientData.count &&
-                    <Counter count={ingredientData.count} size={"default"} extraCalss={styles.counter}/>
+                    <Counter count={ingredientData.count} size={"default"} extraClass={styles.counter}/>
                 }
             </article>
         </li>
