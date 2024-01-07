@@ -1,4 +1,4 @@
-import {useCallback, useMemo} from "react";
+import {useMemo} from "react";
 import {useSelector, useDispatch} from "react-redux";
 import {useDrop} from "react-dnd";
 import {Button, ConstructorElement, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components"
@@ -37,6 +37,7 @@ export default function BurgerConstructor() {
         }
 
         return total
+        // eslint-disable-next-line
     }, [bun, ingredients])
 
     const handleOpenDetails = () => {
