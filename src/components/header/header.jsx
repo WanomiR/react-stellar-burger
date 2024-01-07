@@ -1,6 +1,9 @@
+import {
+    Logo, BurgerIcon, ListIcon, ProfileIcon
+} from "@ya.praktikum/react-developer-burger-ui-components";
+
 import styles from "./header.module.css"
-import { Logo, BurgerIcon, ListIcon, ProfileIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import NavigationItem from "../navigation-item/navigation-item";
+import NavigationItem from "./navigation-item/navigation-item";
 
 export default function AppHeader() {
     return (
@@ -14,7 +17,7 @@ export default function AppHeader() {
                     <NavigationItem Icon={ProfileIcon} itemName={"Личный кабинет"} className={"pt-4 pb-4"}/>
                 </ul>
                 {/* eslint-disable-next-line */}
-                <a className={styles.logo} href={"#"}><Logo /></a>
+                <a className={styles.logo} href={"#"}><Logo/></a>
             </nav>
         </header>
     )

@@ -3,3 +3,7 @@
                  0 0 8px rgb(51 51 255 / 0.25),
                  0 0 16px rgb(51 51 255 / 0.25);
 }
+
+.additionalText {
+    text-align: center;
+}

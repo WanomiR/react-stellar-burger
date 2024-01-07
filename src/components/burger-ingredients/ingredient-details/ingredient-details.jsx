@@ -1,11 +1,27 @@
-import styles from "./ingredient-details.module.css"
-import {ingredientPropType} from "../../utils/prop-types";
+import {useSelector, useDispatch} from "react-redux";
 
-export default function IngredientDetails({ingredientData}) {
-    const {image_large, name, calories, proteins, fat, carbohydrates} = ingredientData;
+import styles from "./ingredient-details.module.css"
+import {modalOpacitySet} from "../../../services/ingredient-details-slice";
+
+export default function IngredientDetails() {
+    const dispatch = useDispatch();
+
+    const {
+        image_large, name, calories, proteins, fat, carbohydrates
+    } = useSelector(state => state.ingredientDetails.ingredientData)
+
+    const onImageLoad = () => {
+        dispatch(modalOpacitySet(1))
+    }
+
     return (
         <>
-            <img src={image_large} alt={`Изображение ингридента: ${name}`} className={`${styles.image} mb-4`}/>
+            <img
+                src={image_large}
+                alt={`Изображение ингридента: ${name}`}
+                className={`${styles.image} mb-4`}
+                onLoad={onImageLoad}
+            />
             <h3 className={"text text_type_main-medium mb-8"}>{name}</h3>
             <table className={"mb-15"}>
                 <thead>
@@ -29,6 +45,4 @@ export default function IngredientDetails({ingredientData}) {
     )
 }
 
-IngredientDetails.propTypes = {
-    ingredientData: ingredientPropType,
-}
+
