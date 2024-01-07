@@ -8,21 +8,21 @@ import Card from "../card/card";
 import {useDispatch} from "react-redux";
 import {activeTabSet} from "../../../services/burger-ingredients-slice";
 
-export default function IngredientsCategory({ingredients, categoryName, className}) {
+export default function IngredientsCategory({ingredients, categoryName, className, containerRef}) {
 
     const dispatch = useDispatch();
 
     const {ref} = useInView({
-        root: document.querySelector("#burgerIngredients"),
-        threshold: 1,
+        root: containerRef.current,
+        threshold: .3,
         onChange: inView => {
             if (inView) dispatch(activeTabSet(categoryName));
         }
     })
 
     return (
-        <div >
-            <h2 className={`${className} text text_type_main-medium`} ref={ref}>
+        <div ref={ref}>
+            <h2 className={`${className} text text_type_main-medium`}>
                 {categoryName}
             </h2>
             <ul className={`${styles.cards} mt-6 mb-10 pl-4`}>
@@ -36,4 +36,8 @@ IngredientsCategory.propTypes = {
     ingredients: PropTypes.arrayOf(ingredientPropType.isRequired).isRequired,
     categoryName: PropTypes.string.isRequired,
     className: PropTypes.string,
+    containerRef: PropTypes.oneOfType([
+        PropTypes.func,
+        PropTypes.shape({ current: PropTypes.instanceOf(Element)})
+    ])
 };

@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect, useRef} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchIngredients} from "../../services/burger-ingredients-slice";
 
@@ -14,10 +14,12 @@ import {Fallback} from "../fallback/Fallback";
 export default function BurgerIngredients() {
 
     const dispatch = useDispatch();
+
     const {ingredients, status, error} = useSelector(state => state.ingredients)
     const activeTab = useSelector(state => state.ingredients.activeTab)
-
     const modalIsOpen = useSelector(state => state.ingredientDetails.isOpen)
+
+    const containerRef = useRef();
 
     useEffect(() => {
         if (status === "idle") {
@@ -26,10 +28,10 @@ export default function BurgerIngredients() {
     }, [status, dispatch]);
 
     return (
-        <section className={styles.section} id={"burgerIngredients"}>
+        <section className={styles.section}>
             <h1 className={"text text_type_main-large mt-10 mb-5"}>Соберите бургер</h1>
             <Tabs activeTab={activeTab}/>
-            <div className={`${styles.ingredientsContainer}`}>
+            <div className={`${styles.ingredientsContainer}`} ref={containerRef}>
                 <Fallback
                     isLoading={status === "loading"}
                     isSuccess={status === "success"}
@@ -37,15 +39,15 @@ export default function BurgerIngredients() {
                 >
                     <IngredientsCategory
                         ingredients={ingredients.filter(item => item.type === "bun")}
-                        categoryName={"Булки"} className={"mt-10"}
+                        categoryName={"Булки"} className={"mt-10"} containerRef={containerRef}
                     />
                     <IngredientsCategory
                         ingredients={ingredients.filter(item => item.type === "sauce")}
-                        categoryName={"Соусы"}
+                        categoryName={"Соусы"} containerRef={containerRef}
                     />
                     <IngredientsCategory
                         ingredients={ingredients.filter(item => item.type === "main")}
-                        categoryName={"Начинки"}
+                        categoryName={"Начинки"} containerRef={containerRef}
                     />
                 </Fallback>
             </div>
